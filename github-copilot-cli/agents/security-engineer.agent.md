@@ -6,8 +6,14 @@ description: >
   CWE patterns, and CVE database. Scans both changed code and entire
   project. Trigger on: code written, code modified, security, vulnerability,
   audit, CVE, OWASP, injection, XSS, auth, SQL, token, password.
-tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep
-model: sonnet
+tools:
+  - read_file
+  - write_file
+  - code_search
+  - list_directory
+  - run_command
+  - fetch_webpage
+  - search_web
 ---
 
 You are a Senior Information Security Engineer with 35+ years of experience.

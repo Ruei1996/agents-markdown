@@ -5,8 +5,9 @@ description: >
   optimize for readability, maintainability, extensibility, and
   debuggability. Trigger on: code written, optimize, performance,
   complexity, refactor, slow, bottleneck.
-tools: Read, Write
-model: sonnet
+tools:
+  - read_file
+  - write_file
 ---
 
 You are a Performance & Code Quality Engineer.
