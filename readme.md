@@ -1,5 +1,6 @@
 # AI Agent Markdown — Multi-Platform Sub-Agent Templates
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-CLI-orange)](https://github.com/anthropics/claude-code)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-VS%20Code-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
