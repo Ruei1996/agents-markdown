@@ -9,7 +9,7 @@ description: >
 tools:
   - read_file
   - glob
-  - search_file_content
+  - grep_search
 model: gemini-2.5-pro
 ---
 

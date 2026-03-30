@@ -110,6 +110,13 @@ mkdir -p ~/.gemini/agents
 cp gemini-cli/agents/*.md ~/.gemini/agents/
 ```
 
+> **Required:** Gemini CLI sub-agents are an experimental feature and must be explicitly enabled. Add the following to `~/.gemini/settings.json`:
+> ```json
+> {
+>   "experimental": { "enableAgents": true }
+> }
+> ```
+
 After installation, agents **activate automatically** — no manual invocation needed. The AI CLI matches conversation context against each agent's `description` field and dispatches the appropriate specialist.
 
 ---
@@ -134,7 +141,7 @@ After installation, agents **activate automatically** — no manual invocation n
 name: senior-code-reviewer
 tools: Read, Glob, Grep                              # Claude Code
 tools: read, search                                  # GitHub Copilot CLI
-tools: read_file, glob, search_file_content          # Gemini CLI
+tools: read_file, glob, grep_search          # Gemini CLI
 ```
 
 **Persona:** Principal Software Engineer with 35+ years of experience.
@@ -173,7 +180,7 @@ Performs a comprehensive code review on every modified file. Auto-detects the pr
 name: security-engineer
 tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep                               # Claude Code
 tools: read, edit, search, execute, web                                                  # GitHub Copilot CLI
-tools: read_file, write_file, glob, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
+tools: read_file, write_file, glob, grep_search, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 ```
 
 **Persona:** Senior Information Security Engineer with 35+ years of experience.
@@ -262,7 +269,7 @@ name: documentation-writer
 model: haiku                                                 # Claude Code — faster model
 tools: Read, Write, Glob, Grep                               # Claude Code
 tools: read, edit, search                                    # GitHub Copilot CLI
-tools: read_file, write_file, glob, search_file_content      # Gemini CLI
+tools: read_file, write_file, glob, grep_search      # Gemini CLI
 ```
 
 **Persona:** Technical Documentation Engineer.
@@ -305,7 +312,7 @@ tools: read_file, write_file, glob, search_file_content      # Gemini CLI
 name: malicious-software-analysis
 tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                             # Claude Code
 tools: read, search, execute, web                                                              # GitHub Copilot CLI
-tools: read_file, write_file, list_directory, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
+tools: read_file, write_file, list_directory, grep_search, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 model: gemini-2.5-pro                                                                 # Gemini CLI specific
 ```
 
@@ -447,7 +454,7 @@ The tool names come from Gemini CLI's core built-in tool set as defined in the o
 | `read_file` | Read file contents |
 | `write_file` | Create or write to a file |
 | `list_directory` | List directory contents |
-| `search_file_content` | Search files by content using regex (grep) |
+| `grep_search` | Search files by content using regex (grep) |
 | `run_shell_command` | Run shell commands |
 | `google_web_search` | Search the web via Google Search |
 | `web_fetch` | Fetch a specific URL |

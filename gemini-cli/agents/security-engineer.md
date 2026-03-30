@@ -10,7 +10,7 @@ tools:
   - read_file
   - write_file
   - glob
-  - search_file_content
+  - grep_search
   - run_shell_command
   - google_web_search
   - web_fetch
@@ -40,7 +40,7 @@ Fetch these NOW before scanning any code:
 Map every function/module against all 10 OWASP categories fetched above.
 
 ### Step 3 — Scan Entire Project
-Use `glob` to find all source files and `search_file_content` to detect
+Use `glob` to find all source files and `grep_search` to detect
 vulnerability patterns across `.go`, `.ts`, `.js`, `.py`, `.java`, `.php` files,
 excluding `node_modules/`, `.git/`, and `vendor/`.
 

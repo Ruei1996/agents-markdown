@@ -9,7 +9,7 @@ tools:
   - read_file
   - write_file
   - glob
-  - search_file_content
+  - grep_search
 model: gemini-2.5-flash
 ---
 
@@ -79,7 +79,7 @@ Use `glob` to scan the project for all documentation files:
 ### Step 2 — Cross-Reference Docs with Latest Code
 For each documentation file found:
 1. Use `read_file` on the doc and list every function, API endpoint, class, CLI flag, or behavior it describes
-2. Use `search_file_content` to locate the corresponding source code
+2. Use `grep_search` to locate the corresponding source code
 3. Use `read_file` on the source to check for discrepancies:
    - Function signatures and parameter names
    - Return types and error conditions

@@ -10,7 +10,7 @@ tools:
   - read_file
   - write_file
   - list_directory
-  - search_file_content
+  - grep_search
   - run_shell_command
   - google_web_search
   - web_fetch
@@ -67,7 +67,7 @@ Pay special attention to:
 
 ## Step 3 — Static Code Analysis
 
-Use `search_file_content` and `read_file` to scan every file. Detection targets:
+Use `grep_search` and `read_file` to scan every file. Detection targets:
 
 ### Network & Remote Access
 ```

@@ -110,6 +110,13 @@ mkdir -p ~/.gemini/agents
 cp gemini-cli/agents/*.md ~/.gemini/agents/
 ```
 
+> **必要步驟：** Gemini CLI 的 sub-agent 功能目前為實驗性功能，需手動啟用。請在 `~/.gemini/settings.json` 中加入以下設定：
+> ```json
+> {
+>   "experimental": { "enableAgents": true }
+> }
+> ```
+
 安裝完成後，agents **自動啟動**，無需手動呼叫。AI CLI 會將對話情境與每個 agent 的 `description` 欄位進行關鍵字比對，自動派遣對應的專家。
 
 ---
@@ -134,7 +141,7 @@ cp gemini-cli/agents/*.md ~/.gemini/agents/
 name: senior-code-reviewer
 tools: Read, Glob, Grep                              # Claude Code
 tools: read, search                                  # GitHub Copilot CLI
-tools: read_file, glob, search_file_content          # Gemini CLI
+tools: read_file, glob, grep_search          # Gemini CLI
 ```
 
 **角色身份：** 擁有 35+ 年資歷的首席軟體工程師（Principal Software Engineer）。
@@ -173,7 +180,7 @@ tools: read_file, glob, search_file_content          # Gemini CLI
 name: security-engineer
 tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep                               # Claude Code
 tools: read, edit, search, execute, web                                                  # GitHub Copilot CLI
-tools: read_file, write_file, glob, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
+tools: read_file, write_file, glob, grep_search, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 ```
 
 **角色身份：** 擁有 35+ 年資歷的資深資訊安全工程師（Senior Information Security Engineer）。
@@ -262,7 +269,7 @@ name: documentation-writer
 model: haiku                                                 # Claude Code — 使用較快的模型
 tools: Read, Write, Glob, Grep                               # Claude Code
 tools: read, edit, search                                    # GitHub Copilot CLI
-tools: read_file, write_file, glob, search_file_content      # Gemini CLI
+tools: read_file, write_file, glob, grep_search      # Gemini CLI
 ```
 
 **角色身份：** 技術文件工程師（Technical Documentation Engineer）。
@@ -305,7 +312,7 @@ tools: read_file, write_file, glob, search_file_content      # Gemini CLI
 name: malicious-software-analysis
 tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                             # Claude Code
 tools: read, search, execute, web                                                              # GitHub Copilot CLI
-tools: read_file, write_file, list_directory, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
+tools: read_file, write_file, list_directory, grep_search, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 model: gemini-2.5-pro                                                                 # Gemini CLI 專屬
 ```
 
@@ -447,7 +454,7 @@ Claude Code agent frontmatter 中的 `tools` 值**直接對應** Claude Code 的
 | `read_file` | 讀取檔案內容 |
 | `write_file` | 建立或寫入檔案 |
 | `list_directory` | 列出目錄內容 |
-| `search_file_content` | 以正規表示式搜尋檔案內容（grep） |
+| `grep_search` | 以正規表示式搜尋檔案內容（grep） |
 | `run_shell_command` | 執行 Shell 指令 |
 | `google_web_search` | 透過 Google Search 搜尋網路 |
 | `web_fetch` | 抓取指定網址的內容 |
@@ -525,7 +532,7 @@ Claude Code agent frontmatter 中的 `tools` 值**直接對應** Claude Code 的
 |------|----------------|-------------------|------------|
 | 讀取檔案 | `Read` | `read`（別名：`Read`） | `read_file` |
 | 寫入檔案 | `Write` | `edit`（別名：`Write`） | `write_file` |
-| 搜尋程式碼 | `Grep` | `search`（別名：`Grep`） | `search_file_content` |
+| 搜尋程式碼 | `Grep` | `search`（別名：`Grep`） | `grep_search` |
 | 執行指令 | `Bash` | `execute`（別名：`Bash`） | `run_shell_command` |
 | 列出目錄 | `LS` | `execute`（執行 `ls`） | `list_directory` |
 | 搜尋網路 | `WebSearch` | `web`（別名：`WebSearch`） | `google_web_search` |
