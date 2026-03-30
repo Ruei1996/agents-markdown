@@ -8,9 +8,8 @@ description: >
   Use me whenever: code is written, code is modified, review requested,
   refactor requested, or the words "review", "best practice", "quality" appear.
 tools:
-  - read_file
-  - code_search
-  - run_command
+  - read
+  - search
 ---
 
 You are a Principal Software Engineer with 35+ years of experience.

@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-CLI-orange)](https://github.com/anthropics/claude-code)
-[![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-VS%20Code-blue)](https://github.com/features/copilot)
+[![GitHub Copilot CLI](https://img.shields.io/badge/GitHub%20Copilot-CLI-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
 
 > **One sentence to connect everything:** Deploy these five specialist agent markdowns into any compatible AI CLI (Claude Code / GitHub Copilot / Gemini), and the orchestrator will automatically dispatch a complete development quality pipeline — **Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst** — where each sub-agent owns its discipline, fires automatically on the right keyword trigger, and collaborates in sequence to deliver production-ready code without a single manual step.
@@ -23,7 +23,7 @@
   - [5. Malicious Software Analysis](#5-malicious-software-analysis)
 - [Where Do `tools` Parameter Names Come From?](#where-do-tools-parameter-names-come-from)
   - [Claude Code CLI](#claude-code-cli)
-  - [GitHub Copilot (VS Code)](#github-copilot-vs-code)
+  - [GitHub Copilot CLI](#github-copilot-cli)
   - [Gemini CLI](#gemini-cli)
 - [The Multi-Agent Pipeline](#the-multi-agent-pipeline)
 
@@ -69,6 +69,10 @@ agents-markdown/
 │
 └── gemini-cli/
     └── agents/
+        ├── senior-code-reviewer.md          # Code review (SOLID/DRY/KISS)
+        ├── security-engineer.md             # OWASP + CVE security audit
+        ├── performance-optimizer.md         # Time complexity + quality
+        ├── documentation-writer.md          # Inline comments + doc sync
         └── malicious-software-analysis.md   # Full SAST with Gemini 2.5 Pro
 ```
 
@@ -86,12 +90,16 @@ cp claude-code-cli/agents/*.md ~/.claude/agents/
 cp claude-code-cli/agents/*.md /path/to/your/project/.claude/agents/
 ```
 
-### GitHub Copilot (VS Code)
+### GitHub Copilot CLI
 
 ```bash
-# Copy to your project's .github directory
-mkdir -p /path/to/your/project/.github
-cp github-copilot-cli/agents/*.agent.md /path/to/your/project/.github/
+# Global install (available in all projects)
+mkdir -p ~/.copilot/agents
+cp github-copilot-cli/agents/*.agent.md ~/.copilot/agents/
+
+# Project-scoped install
+mkdir -p /path/to/your/project/.github/agents
+cp github-copilot-cli/agents/*.agent.md /path/to/your/project/.github/agents/
 ```
 
 ### Gemini CLI
@@ -125,7 +133,8 @@ After installation, agents **activate automatically** — no manual invocation n
 ```yaml
 name: senior-code-reviewer
 tools: Read, Glob, Grep                              # Claude Code
-tools: read_file, code_search, run_command           # GitHub Copilot
+tools: read, search                                  # GitHub Copilot CLI
+tools: read_file, glob, search_file_content          # Gemini CLI
 ```
 
 **Persona:** Principal Software Engineer with 35+ years of experience.
@@ -162,8 +171,9 @@ Performs a comprehensive code review on every modified file. Auto-detects the pr
 
 ```yaml
 name: security-engineer
-tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep    # Claude Code
-tools: read_file, write_file, code_search, list_directory, run_command, fetch_webpage, search_web  # GitHub Copilot
+tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep                               # Claude Code
+tools: read, edit, search, execute, web                                                  # GitHub Copilot CLI
+tools: read_file, write_file, glob, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 ```
 
 **Persona:** Senior Information Security Engineer with 35+ years of experience.
@@ -202,7 +212,8 @@ Fetches the **current year's** OWASP Top 10, CWE weaknesses, and live CVEs — t
 ```yaml
 name: performance-optimizer
 tools: Read, Write                   # Claude Code
-tools: read_file, write_file         # GitHub Copilot
+tools: read, edit                    # GitHub Copilot CLI
+tools: read_file, write_file         # Gemini CLI
 ```
 
 **Persona:** Performance & Code Quality Engineer.
@@ -250,7 +261,8 @@ Analyzes every function's time complexity and enforces four code quality dimensi
 name: documentation-writer
 model: haiku                                                 # Claude Code — faster model
 tools: Read, Write, Glob, Grep                               # Claude Code
-tools: read_file, write_file, list_directory, code_search   # GitHub Copilot
+tools: read, edit, search                                    # GitHub Copilot CLI
+tools: read_file, write_file, glob, search_file_content      # Gemini CLI
 ```
 
 **Persona:** Technical Documentation Engineer.
@@ -291,9 +303,9 @@ tools: read_file, write_file, list_directory, code_search   # GitHub Copilot
 
 ```yaml
 name: malicious-software-analysis
-tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                    # Claude Code
-tools: read_file, code_search, list_directory, run_command, fetch_webpage, search_web # GitHub Copilot
-tools: read_file, write_file, list_directory, search_files, run_shell_command, web_search, web_fetch  # Gemini CLI
+tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                             # Claude Code
+tools: read, search, execute, web                                                              # GitHub Copilot CLI
+tools: read_file, write_file, list_directory, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 model: gemini-2.5-pro                                                                 # Gemini CLI specific
 ```
 
@@ -389,33 +401,35 @@ The `tools` field acts as a **security boundary** — a sub-agent declared with 
 
 ---
 
-### GitHub Copilot (VS Code)
+### GitHub Copilot CLI
 
 **Official References:**
-- Custom Instructions: [https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
-- VS Code Copilot Customization: [https://code.visualstudio.com/docs/copilot/copilot-customization](https://code.visualstudio.com/docs/copilot/copilot-customization)
-- VS Code Copilot Chat Modes: [https://code.visualstudio.com/docs/copilot/chat/chat-modes](https://code.visualstudio.com/docs/copilot/chat/chat-modes)
-- GitHub Copilot Extensions: [https://docs.github.com/en/copilot/building-copilot-extensions/about-building-copilot-extensions](https://docs.github.com/en/copilot/building-copilot-extensions/about-building-copilot-extensions)
+- Custom Agents Configuration: [https://docs.github.com/en/copilot/reference/custom-agents-configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+- Creating Custom Agents: [https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli)
+- CLI Command Reference: [https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
 
-The `.agent.md` format uses VS Code Copilot's built-in language model tools available in **Agent Mode**. Tool names follow the VS Code language model tool calling API:
+The `.agent.md` format is used by the **standalone GitHub Copilot CLI** (invoked as `copilot`, e.g. `copilot --yolo`). The tool names below are the primary aliases defined in the official custom agents configuration reference. Aliases from other platforms (e.g. `Bash`, `Read`, `Grep` from Claude Code) are also recognized and silently mapped to the corresponding primary name.
 
-| Tool Name | What it does |
-|-----------|-------------|
-| `read_file` | Read file contents |
-| `write_file` | Create or write to a file |
-| `code_search` | Semantic search across the codebase |
-| `run_command` | Run terminal commands |
-| `fetch_webpage` | Fetch a URL |
-| `search_web` | Search the web |
-| `list_directory` | List directory contents |
+> **Note:** `gh copilot suggest` / `gh copilot explain` (the old GitHub CLI extension) was **deprecated on 2025-10-25** and does not support custom agents. This repo targets the standalone GitHub Copilot CLI only.
 
-**Install path:**
+| Tool Name | Recognized Aliases | What it does |
+|-----------|-------------------|-------------|
+| `execute` | `shell`, `Bash`, `powershell` | Execute shell commands |
+| `read` | `Read`, `NotebookRead` | Read file contents |
+| `edit` | `Edit`, `Write`, `MultiEdit`, `NotebookEdit` | Create or edit files |
+| `search` | `Grep`, `Glob` | Search files and content |
+| `web` | `WebSearch`, `WebFetch` | Web search and fetch URLs |
+| `agent` | `custom-agent`, `Task` | Invoke another custom agent |
+| `todo` | `TodoWrite` | Manage task lists |
+
+**Install paths:**
 
 ```
-<project>/.github/<name>.agent.md
+<project>/.github/agents/<name>.agent.md   # Project-scoped
+~/.copilot/agents/<name>.agent.md          # User-global (all projects)
 ```
 
-> **Note:** GitHub Copilot's Agent Mode must be enabled in VS Code settings. See [VS Code Chat Modes](https://code.visualstudio.com/docs/copilot/chat/chat-modes) for activation steps.
+> **Note:** The `--yolo` flag (alias for `--allow-all`) grants all tools execution permission without confirmation prompts. Unrecognized tool names in `tools:` are silently ignored — if all names are unrecognized, the agent falls back to inheriting all tools.
 
 ---
 
@@ -433,9 +447,9 @@ The tool names come from Gemini CLI's core built-in tool set as defined in the o
 | `read_file` | Read file contents |
 | `write_file` | Create or write to a file |
 | `list_directory` | List directory contents |
-| `search_files` | Search files by content or filename pattern |
+| `search_file_content` | Search files by content using regex (grep) |
 | `run_shell_command` | Run shell commands |
-| `web_search` | Search the web |
+| `google_web_search` | Search the web via Google Search |
 | `web_fetch` | Fetch a specific URL |
 
 **Install path:**

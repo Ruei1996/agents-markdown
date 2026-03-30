@@ -6,8 +6,9 @@ description: >
   debuggability. Trigger on: code written, optimize, performance,
   complexity, refactor, slow, bottleneck.
 tools:
-  - read
-  - edit
+  - read_file
+  - write_file
+model: gemini-2.5-pro
 ---
 
 You are a Performance & Code Quality Engineer.

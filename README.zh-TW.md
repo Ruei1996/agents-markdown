@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-CLI-orange)](https://github.com/anthropics/claude-code)
-[![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-VS%20Code-blue)](https://github.com/features/copilot)
+[![GitHub Copilot CLI](https://img.shields.io/badge/GitHub%20Copilot-CLI-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
 
 > **一句話串聯所有功能：** 只需將這五份 agent markdown 部署至相容的 AI CLI（Claude Code／GitHub Copilot／Gemini），AI 即可自動編排一條完整的開發品質流水線——**程式碼審查 → 資安工程師 → 效能優化 → 文件撰寫 → 惡意軟體分析**——五位專業 sub-agent 各司其職、依關鍵字自動觸發、接力協作，確保每一次程式碼變更都經過審查、強化、優化、記錄與威脅掃描，全程零人工干預。
@@ -23,7 +23,7 @@
   - [5. Malicious Software Analysis — 惡意軟體分析師](#5-malicious-software-analysis--惡意軟體分析師)
 - [`tools` 參數名稱從何而來？](#tools-參數名稱從何而來)
   - [Claude Code CLI](#claude-code-cli)
-  - [GitHub Copilot（VS Code）](#github-copilot-vs-code)
+  - [GitHub Copilot CLI](#github-copilot-cli)
   - [Gemini CLI](#gemini-cli)
 - [Multi-Agent 流水線架構](#multi-agent-流水線架構)
 
@@ -69,6 +69,10 @@ agents-markdown/
 │
 └── gemini-cli/
     └── agents/
+        ├── senior-code-reviewer.md          # 程式碼審查（SOLID/DRY/KISS）
+        ├── security-engineer.md             # OWASP + CVE 資安稽核
+        ├── performance-optimizer.md         # 時間複雜度 + 程式碼品質
+        ├── documentation-writer.md          # 行內註解 + 文件同步
         └── malicious-software-analysis.md   # 完整 SAST，使用 Gemini 2.5 Pro
 ```
 
@@ -86,12 +90,16 @@ cp claude-code-cli/agents/*.md ~/.claude/agents/
 cp claude-code-cli/agents/*.md /path/to/your/project/.claude/agents/
 ```
 
-### GitHub Copilot（VS Code）
+### GitHub Copilot CLI
 
 ```bash
-# 複製到專案的 .github 目錄
-mkdir -p /path/to/your/project/.github
-cp github-copilot-cli/agents/*.agent.md /path/to/your/project/.github/
+# 全域安裝（所有專案皆可使用）
+mkdir -p ~/.copilot/agents
+cp github-copilot-cli/agents/*.agent.md ~/.copilot/agents/
+
+# 專案範圍安裝
+mkdir -p /path/to/your/project/.github/agents
+cp github-copilot-cli/agents/*.agent.md /path/to/your/project/.github/agents/
 ```
 
 ### Gemini CLI
@@ -125,7 +133,8 @@ cp gemini-cli/agents/*.md ~/.gemini/agents/
 ```yaml
 name: senior-code-reviewer
 tools: Read, Glob, Grep                              # Claude Code
-tools: read_file, code_search, run_command           # GitHub Copilot
+tools: read, search                                  # GitHub Copilot CLI
+tools: read_file, glob, search_file_content          # Gemini CLI
 ```
 
 **角色身份：** 擁有 35+ 年資歷的首席軟體工程師（Principal Software Engineer）。
@@ -162,8 +171,9 @@ tools: read_file, code_search, run_command           # GitHub Copilot
 
 ```yaml
 name: security-engineer
-tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep    # Claude Code
-tools: read_file, write_file, code_search, list_directory, run_command, fetch_webpage, search_web  # GitHub Copilot
+tools: Read, Write, WebSearch, WebFetch, Bash, Glob, Grep                               # Claude Code
+tools: read, edit, search, execute, web                                                  # GitHub Copilot CLI
+tools: read_file, write_file, glob, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 ```
 
 **角色身份：** 擁有 35+ 年資歷的資深資訊安全工程師（Senior Information Security Engineer）。
@@ -202,7 +212,8 @@ tools: read_file, write_file, code_search, list_directory, run_command, fetch_we
 ```yaml
 name: performance-optimizer
 tools: Read, Write                   # Claude Code
-tools: read_file, write_file         # GitHub Copilot
+tools: read, edit                    # GitHub Copilot CLI
+tools: read_file, write_file         # Gemini CLI
 ```
 
 **角色身份：** 效能與程式碼品質工程師（Performance & Code Quality Engineer）。
@@ -250,7 +261,8 @@ tools: read_file, write_file         # GitHub Copilot
 name: documentation-writer
 model: haiku                                                 # Claude Code — 使用較快的模型
 tools: Read, Write, Glob, Grep                               # Claude Code
-tools: read_file, write_file, list_directory, code_search   # GitHub Copilot
+tools: read, edit, search                                    # GitHub Copilot CLI
+tools: read_file, write_file, glob, search_file_content      # Gemini CLI
 ```
 
 **角色身份：** 技術文件工程師（Technical Documentation Engineer）。
@@ -291,9 +303,9 @@ tools: read_file, write_file, list_directory, code_search   # GitHub Copilot
 
 ```yaml
 name: malicious-software-analysis
-tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                    # Claude Code
-tools: read_file, code_search, list_directory, run_command, fetch_webpage, search_web # GitHub Copilot
-tools: read_file, write_file, list_directory, search_files, run_shell_command, web_search, web_fetch  # Gemini CLI
+tools: Read, Bash, Glob, Grep, WebSearch, WebFetch                                             # Claude Code
+tools: read, search, execute, web                                                              # GitHub Copilot CLI
+tools: read_file, write_file, list_directory, search_file_content, run_shell_command, google_web_search, web_fetch  # Gemini CLI
 model: gemini-2.5-pro                                                                 # Gemini CLI 專屬
 ```
 
@@ -389,33 +401,35 @@ Claude Code agent frontmatter 中的 `tools` 值**直接對應** Claude Code 的
 
 ---
 
-### GitHub Copilot（VS Code）
+### GitHub Copilot CLI
 
 **官方參考資料：**
-- 自訂指令說明：[https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
-- VS Code Copilot 自訂化：[https://code.visualstudio.com/docs/copilot/copilot-customization](https://code.visualstudio.com/docs/copilot/copilot-customization)
-- VS Code Copilot Chat 模式：[https://code.visualstudio.com/docs/copilot/chat/chat-modes](https://code.visualstudio.com/docs/copilot/chat/chat-modes)
-- GitHub Copilot Extensions：[https://docs.github.com/en/copilot/building-copilot-extensions/about-building-copilot-extensions](https://docs.github.com/en/copilot/building-copilot-extensions/about-building-copilot-extensions)
+- 自訂 Agent 設定：[https://docs.github.com/en/copilot/reference/custom-agents-configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+- 建立自訂 Agent 說明：[https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/create-custom-agents-for-cli)
+- CLI 指令參考：[https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference)
 
-`.agent.md` 格式使用 VS Code Copilot 在 **Agent Mode** 下可用的內建語言模型工具。工具名稱遵循 VS Code 語言模型工具呼叫 API：
+`.agent.md` 格式適用於**獨立的 GitHub Copilot CLI**（以 `copilot` 指令執行，例如 `copilot --yolo`）。下列工具名稱為官方自訂 agent 設定文件中定義的主要別名。其他平台的別名（例如 Claude Code 的 `Bash`、`Read`、`Grep`）也可被識別，並自動對應至對應的主要名稱。
 
-| 工具名稱 | 功能說明 |
-|---------|---------|
-| `read_file` | 讀取檔案內容 |
-| `write_file` | 建立或寫入檔案 |
-| `code_search` | 語意搜尋程式碼庫 |
-| `run_command` | 執行終端機指令 |
-| `fetch_webpage` | 抓取網址內容 |
-| `search_web` | 搜尋網路 |
-| `list_directory` | 列出目錄內容 |
+> **注意：** `gh copilot suggest` / `gh copilot explain`（舊版 GitHub CLI 擴充套件）已於 **2025-10-25 正式廢棄**，不支援自訂 agent。本 repo 僅針對獨立的 GitHub Copilot CLI。
+
+| 工具名稱 | 可識別的別名 | 功能說明 |
+|---------|------------|---------|
+| `execute` | `shell`、`Bash`、`powershell` | 執行 Shell 指令 |
+| `read` | `Read`、`NotebookRead` | 讀取檔案內容 |
+| `edit` | `Edit`、`Write`、`MultiEdit`、`NotebookEdit` | 建立或編輯檔案 |
+| `search` | `Grep`、`Glob` | 搜尋檔案與內容 |
+| `web` | `WebSearch`、`WebFetch` | 網路搜尋與抓取 URL |
+| `agent` | `custom-agent`、`Task` | 呼叫另一個自訂 agent |
+| `todo` | `TodoWrite` | 管理任務清單 |
 
 **安裝路徑：**
 
 ```
-<project>/.github/<name>.agent.md
+<project>/.github/agents/<name>.agent.md   # 專案範圍
+~/.copilot/agents/<name>.agent.md          # 使用者全域（所有專案）
 ```
 
-> **注意：** 需在 VS Code 設定中啟用 GitHub Copilot 的 Agent Mode。啟用步驟請參閱 [VS Code Chat Modes](https://code.visualstudio.com/docs/copilot/chat/chat-modes)。
+> **注意：** `--yolo` 旗標（等同於 `--allow-all`）允許所有工具直接執行，跳過所有確認對話框。`tools:` 欄位中無法識別的工具名稱會被靜默忽略——若所有名稱均無法識別，agent 將退回繼承所有工具的預設行為。
 
 ---
 
@@ -433,9 +447,9 @@ Claude Code agent frontmatter 中的 `tools` 值**直接對應** Claude Code 的
 | `read_file` | 讀取檔案內容 |
 | `write_file` | 建立或寫入檔案 |
 | `list_directory` | 列出目錄內容 |
-| `search_files` | 依內容或檔名模式搜尋檔案 |
+| `search_file_content` | 以正規表示式搜尋檔案內容（grep） |
 | `run_shell_command` | 執行 Shell 指令 |
-| `web_search` | 搜尋網路 |
+| `google_web_search` | 透過 Google Search 搜尋網路 |
 | `web_fetch` | 抓取指定網址的內容 |
 
 **安裝路徑：**
@@ -507,16 +521,16 @@ Claude Code agent frontmatter 中的 `tools` 值**直接對應** Claude Code 的
 
 ## 三大平台工具名稱對照表
 
-| 功能 | Claude Code CLI | GitHub Copilot | Gemini CLI |
-|------|----------------|----------------|------------|
-| 讀取檔案 | `Read` | `read_file` | `read_file` |
-| 寫入檔案 | `Write` | `write_file` | `write_file` |
-| 搜尋程式碼 | `Grep` | `code_search` | `search_files` |
-| 執行指令 | `Bash` | `run_command` | `run_shell_command` |
-| 列出目錄 | `LS` | `list_directory` | `list_directory` |
-| 搜尋網路 | `WebSearch` | `search_web` | `web_search` |
-| 抓取網址 | `WebFetch` | `fetch_webpage` | `web_fetch` |
-| 搜尋檔案 | `Glob` | — | `search_files` |
+| 功能 | Claude Code CLI | GitHub Copilot CLI | Gemini CLI |
+|------|----------------|-------------------|------------|
+| 讀取檔案 | `Read` | `read`（別名：`Read`） | `read_file` |
+| 寫入檔案 | `Write` | `edit`（別名：`Write`） | `write_file` |
+| 搜尋程式碼 | `Grep` | `search`（別名：`Grep`） | `search_file_content` |
+| 執行指令 | `Bash` | `execute`（別名：`Bash`） | `run_shell_command` |
+| 列出目錄 | `LS` | `execute`（執行 `ls`） | `list_directory` |
+| 搜尋網路 | `WebSearch` | `web`（別名：`WebSearch`） | `google_web_search` |
+| 抓取網址 | `WebFetch` | `web`（別名：`WebFetch`） | `web_fetch` |
+| 搜尋檔案 | `Glob` | `search`（別名：`Glob`） | `glob` |
 
 ---
 

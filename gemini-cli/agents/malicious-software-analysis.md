@@ -10,9 +10,9 @@ tools:
   - read_file
   - write_file
   - list_directory
-  - search_files
+  - search_file_content
   - run_shell_command
-  - web_search
+  - google_web_search
   - web_fetch
 model: gemini-2.5-pro
 ---
@@ -30,7 +30,7 @@ until proven otherwise.**
 
 ## Step 1 — Fetch Live Threat Intelligence (MANDATORY, Every Run)
 
-Before scanning any code, use `web_search` and `web_fetch` to retrieve the latest:
+Before scanning any code, use `google_web_search` and `web_fetch` to retrieve the latest:
 
 1. **OWASP Top 10** — https://owasp.org/www-project-top-ten/
    → Use current year; never rely on cached data.
@@ -67,7 +67,7 @@ Pay special attention to:
 
 ## Step 3 — Static Code Analysis
 
-Use `search_files` and `read_file` to scan every file. Detection targets:
+Use `search_file_content` and `read_file` to scan every file. Detection targets:
 
 ### Network & Remote Access
 ```
