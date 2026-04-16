@@ -5,7 +5,7 @@
 [![GitHub Copilot CLI](https://img.shields.io/badge/GitHub%20Copilot-CLI-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
 
-> **One sentence to connect everything:** Deploy these five specialist agent markdowns into any compatible AI CLI (Claude Code / GitHub Copilot / Gemini), and the orchestrator will automatically dispatch a complete development quality pipeline — **Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst** — where each sub-agent owns its discipline, fires automatically on the right keyword trigger, and collaborates in sequence to deliver production-ready code without a single manual step.
+> **One sentence to connect everything:** Deploy these eight specialist agent markdowns into any compatible AI CLI (Claude Code / GitHub Copilot / Gemini), and your AI instantly gains two complete pipelines — the **Development Quality Pipeline** (Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst) fires automatically on every code change; the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) activates on demand when you plan a new feature or start a new project — eight sub-agents, each owning its domain, making your AI CLI a complete full-stack development partner.
 
 ---
 
@@ -14,18 +14,25 @@
 - [What is this?](#what-is-this)
 - [Project Structure](#project-structure)
 - [Quick Start](#quick-start)
-- [The 5 Agents at a Glance](#the-5-agents-at-a-glance)
-- [Detailed Walkthrough — Each Agent](#detailed-walkthrough--each-agent)
+- [Agent Categories at a Glance](#agent-categories-at-a-glance)
+  - [Category 1: Development Quality Pipeline (Auto-triggered)](#category-1-development-quality-pipeline-auto-triggered)
+  - [Category 2: Product & Design Agents (Intent-triggered)](#category-2-product--design-agents-intent-triggered)
+- [Development Quality Pipeline — Each Agent](#development-quality-pipeline--each-agent)
   - [1. Senior Code Reviewer](#1-senior-code-reviewer)
   - [2. Security Engineer](#2-security-engineer)
   - [3. Performance Optimizer](#3-performance-optimizer)
   - [4. Documentation Writer](#4-documentation-writer)
   - [5. Malicious Software Analysis](#5-malicious-software-analysis)
+- [Product & Design Agents — Full SOP Tutorials](#product--design-agents--full-sop-tutorials)
+  - [6. AI DLC Sprint Product Owner](#6-ai-dlc-sprint-product-owner)
+  - [7. TPM Product Manager](#7-tpm-product-manager)
+  - [8. UI/UX Designer](#8-uiux-designer)
 - [Where Do `tools` Parameter Names Come From?](#where-do-tools-parameter-names-come-from)
   - [Claude Code CLI](#claude-code-cli)
   - [GitHub Copilot CLI](#github-copilot-cli)
   - [Gemini CLI](#gemini-cli)
 - [The Multi-Agent Pipeline](#the-multi-agent-pipeline)
+- [Cross-Platform Tool Name Reference](#cross-platform-tool-name-reference)
 
 ---
 
@@ -36,13 +43,14 @@ This repository provides **ready-to-use AI sub-agent definition files** for thre
 | Frontmatter Field | Purpose |
 |-------------------|---------|
 | `name` | Unique identifier for the agent |
-| `description` | When to automatically invoke it (keyword-based trigger) |
-| `tools` | Which built-in tools this agent is allowed to call |
+| `description` | When to automatically invoke it (keyword-based trigger, or user-initiated) |
+| `tools` | Which built-in tools this agent is allowed to call (security boundary) |
 | `model` | Which AI model to use *(Gemini CLI / Claude Code)* |
+| `color` | Color label in Claude Code's UI *(Claude Code only)* |
 
 The agent's system prompt follows the frontmatter — defining the agent's persona, step-by-step procedures, and structured output format.
 
-**Install once → your AI CLI gains five specialized co-workers** that automatically review, secure, optimize, document, and threat-scan your code on every change.
+**Install once → your AI CLI gains eight specialized co-workers** covering the complete workflow: code quality, security, performance, documentation, malware detection, product planning, project management, and UI/UX design.
 
 ---
 
@@ -57,7 +65,10 @@ agents-markdown/
 │       ├── security-engineer.md             # OWASP + CVE security audit
 │       ├── performance-optimizer.md         # Time complexity + quality
 │       ├── documentation-writer.md          # Inline comments + doc sync
-│       └── malicious-software-analysis.md   # SAST + malware detection
+│       ├── malicious-software-analysis.md   # SAST + malware detection
+│       ├── ai-dlc-sprint-product-owner.md   # Sprint PRD generation (mandatory Q&A)
+│       ├── tpm-product-manager.md           # User Stories + Backlog management
+│       └── ui-ux-designer.md                # Interactive HTML/CSS prototype design
 │
 ├── github-copilot-cli/
 │   └── agents/
@@ -65,15 +76,21 @@ agents-markdown/
 │       ├── security-engineer.agent.md
 │       ├── performance-optimizer.agent.md
 │       ├── documentation-writer.agent.md
-│       └── malicious-software-analysis.agent.md
+│       ├── malicious-software-analysis.agent.md
+│       ├── ai-dlc-sprint-product-owner.agent.md
+│       ├── tpm-product-manager.agent.md
+│       └── ui-ux-designer.agent.md
 │
 └── gemini-cli/
     └── agents/
-        ├── senior-code-reviewer.md          # Code review (SOLID/DRY/KISS)
-        ├── security-engineer.md             # OWASP + CVE security audit
-        ├── performance-optimizer.md         # Time complexity + quality
-        ├── documentation-writer.md          # Inline comments + doc sync
-        └── malicious-software-analysis.md   # Full SAST with Gemini 2.5 Pro
+        ├── senior-code-reviewer.md
+        ├── security-engineer.md
+        ├── performance-optimizer.md
+        ├── documentation-writer.md
+        ├── malicious-software-analysis.md   # Uses Gemini 2.5 Pro
+        ├── ai-dlc-sprint-product-owner.md   # Uses Gemini 2.5 Pro
+        ├── tpm-product-manager.md           # Uses Gemini 2.5 Pro
+        └── ui-ux-designer.md                # Uses Gemini 2.5 Pro
 ```
 
 ---
@@ -121,7 +138,11 @@ After installation, agents **activate automatically** — no manual invocation n
 
 ---
 
-## The 5 Agents at a Glance
+## Agent Categories at a Glance
+
+### Category 1: Development Quality Pipeline (Auto-triggered)
+
+> Write code or use a matching keyword, and these five agents fire automatically in sequence — no manual steps required.
 
 | Agent | Persona | Auto-Triggers On | Key Output |
 |-------|---------|-----------------|------------|
@@ -133,7 +154,19 @@ After installation, agents **activate automatically** — no manual invocation n
 
 ---
 
-## Detailed Walkthrough — Each Agent
+### Category 2: Product & Design Agents (Intent-triggered)
+
+> These three agents activate when you describe a product idea, design requirement, or feature plan. Unlike Category 1, they are triggered by your explicit intent — not code events.
+
+| Agent | Persona | Triggers On | Key Output |
+|-------|---------|------------|------------|
+| `ai-dlc-sprint-product-owner` | Sprint Product Owner | Describing an app or feature idea | 48-72h execution PRD (12 sections) |
+| `tpm-product-manager` | Technical Product Manager | Design complete, need user stories | PRD.md + formatted User Stories |
+| `ui-ux-designer` | Senior UI/UX Designer | Need component design, wireframe, design system | Interactive HTML/CSS prototypes in `design/` |
+
+---
+
+## Development Quality Pipeline — Each Agent
 
 ### 1. Senior Code Reviewer
 
@@ -141,7 +174,7 @@ After installation, agents **activate automatically** — no manual invocation n
 name: senior-code-reviewer
 tools: Read, Glob, Grep                              # Claude Code
 tools: read, search                                  # GitHub Copilot CLI
-tools: read_file, glob, grep_search          # Gemini CLI
+tools: read_file, glob, grep_search                  # Gemini CLI
 ```
 
 **Persona:** Principal Software Engineer with 35+ years of experience.
@@ -269,7 +302,7 @@ name: documentation-writer
 model: haiku                                                 # Claude Code — faster model
 tools: Read, Write, Glob, Grep                               # Claude Code
 tools: read, edit, search                                    # GitHub Copilot CLI
-tools: read_file, write_file, glob, grep_search      # Gemini CLI
+tools: read_file, write_file, glob, grep_search              # Gemini CLI
 ```
 
 **Persona:** Technical Documentation Engineer.
@@ -301,7 +334,7 @@ tools: read_file, write_file, glob, grep_search      # Gemini CLI
 **Absolute Rules:**
 - All comments must be in English
 - Never write obvious comments (`// increment i` for `i++`)
-- Never modify source code to match docs — docs always follow code
+- Never modify source code to match docs — **documents always follow code**
 - Mark removed APIs as `[DEPRECATED — removed in <version>]`
 
 ---
@@ -367,6 +400,343 @@ Overall Risk Level: CRITICAL / HIGH / MEDIUM / LOW
 ```
 
 **Absolute Rule:** Flag when in doubt — never dismiss obfuscated code as benign without full deobfuscation. Every finding must include what the code does, how it enables an attack, and a concrete fix.
+
+---
+
+## Product & Design Agents — Full SOP Tutorials
+
+> These three agents work differently from the development quality pipeline — they **do not wait passively for code changes**. Instead, they activate when you describe a product idea, design requirement, or feature plan. This section provides complete step-by-step instructions so any user can get started immediately.
+
+---
+
+### 6. AI DLC Sprint Product Owner
+
+```yaml
+name: ai-dlc-sprint-product-owner
+tools: Write                             # Claude Code
+tools: write_file                        # Gemini CLI
+tools: write                             # GitHub Copilot CLI
+model: opus                              # Claude Code
+model: gemini-2.5-pro                    # Gemini CLI
+```
+
+#### When to Use
+
+| Scenario | Description |
+|----------|-------------|
+| New side project idea | Want to ship an MVP in a weekend or 48-72 hours |
+| New feature planning | Have an idea but unclear on scope — need to define the MVP fast |
+| Pre-development alignment | Want to lock in priorities and technical direction before writing code |
+
+#### How It Works
+
+This agent uses a **mandatory two-phase workflow** — Phase 1 can never be skipped:
+
+```
+Phase 1: Structured Q&A (always runs)
+    │
+    ├── Category 1: Core Problem (3 questions) → waits for your answers
+    ├── Category 2: User Profile (3 questions) → waits for your answers
+    └── Category 3: Success Definition (3 questions) → waits for your answers
+    │
+    ▼
+Phase 2: PRD Generation (after all answers received)
+    └── Produces a complete 12-section PRD, saved as a .md file
+```
+
+> **Why can't Phase 1 be skipped?** If the agent generates the PRD directly, it makes assumptions it thinks are "reasonable" — but those assumptions often miss your actual priorities. The Q&A phase captures your real trade-off preferences (accuracy vs. speed vs. completeness), ensuring every decision in the PRD aligns with your specific needs.
+
+#### Step-by-Step Instructions
+
+**Step 1: Describe your idea**
+
+Just describe your project in natural language — the agent auto-detects and activates:
+
+```
+User: I want to build a travel safety info tool that lets you look up
+      flight restrictions, security alerts, and recent incidents between
+      two locations, and export the result as a PDF
+```
+
+**Step 2: Answer Category 1 — Core Problem**
+
+The agent asks three questions, one group at a time:
+
+```
+Q1. Why are you building this? What's wrong with existing solutions?
+Q2. How painful is this problem? (Rate 1–10)
+Q3. What happens if it goes unsolved?
+```
+
+Answer honestly — no technical jargon required.
+
+**Step 3: Answer Category 2 — User Profile**
+
+```
+Q4. Who will use this tool? (List specific user types)
+Q5. What tools do they currently use to solve this problem?
+Q6. What do they care about most? Rank in order of priority:
+    Speed / Completeness / Accuracy / Visual clarity
+```
+
+**Step 4: Answer Category 3 — Success Definition**
+
+```
+Q7. What does "success" look like for this tool?
+Q8. What features must the MVP include? (Agent provides a checklist)
+Q9. What does "done" mean to you?
+    - Runs on localhost is enough
+    - Needs to be deployed online (prefer free tier)
+    - Needs a complete visual design
+```
+
+**Step 5: Receive your complete PRD**
+
+After all three categories are answered, the agent automatically generates and saves the complete PRD, containing 12 sections:
+
+| # | Section | Contents |
+|---|---------|----------|
+| 1 | Core Intent | One paragraph describing the problem and the cost of inaction |
+| 2 | Target User | One sentence describing the primary user |
+| 3 | **User Priority Ordering** | From Q6 — drives all feature trade-off decisions |
+| 4 | MVP Features (max 5) | Each labeled Day 1/2/3, single item ≤8 hours |
+| 5 | Non-Features | Explicitly out-of-scope items, prevents scope creep |
+| 6 | Success Criteria | Measurable completion standards |
+| 7 | Technical Constraints | Tech stack table, including free deployment options |
+| 8 | **Data Source Strategy** | Data source, access method, and fallback per module |
+| 9 | **Day-by-Day Execution Plan** | Time slot \| Task \| Expected output (3-column table) |
+| 10 | **Key Technical Decisions** | Each decision with alternatives and trade-off rationale |
+| 11 | Risk Mitigation | Risk \| Impact \| Mitigation strategy (3-column table) |
+| 12 | **Folder Structure** | Complete frontend/backend directory tree for scaffolding |
+
+#### Notes
+
+- **Don't skip any category in the Q&A** — each question maps to a specific PRD section
+- **Q6 priority ranking is critical** — it drives the trade-off logic throughout MVP Features
+- **Q9 deployment requirement** — affects the deployment options in Technical Constraints (agent defaults to free-tier recommendations)
+- **PRD save path** — tell the agent your preferred filename and path after the Q&A
+
+---
+
+### 7. TPM Product Manager
+
+```yaml
+name: tpm-product-manager
+tools: Read, Write, Glob, Grep           # Claude Code
+tools: read_file, write_file, glob,
+       grep_search                       # Gemini CLI
+tools: read, edit, search               # GitHub Copilot CLI
+model: sonnet                            # Claude Code
+model: gemini-2.5-pro                    # Gemini CLI
+```
+
+#### When to Use
+
+| Scenario | Description |
+|----------|-------------|
+| Post-design handoff | Designer's mockup is ready — need to convert it into developer-executable user stories |
+| Backlog management | Need to prioritize pending features and estimate story points |
+| Acceptance criteria definition | Need to define clearly what "done" means (Definition of Done) |
+| Requirements translation | Bridge the language gap between business requirements and technical implementation |
+
+#### How It Works
+
+```
+Input: Design mockup / business requirement / verbal description
+    │
+    ├── Reads design documents from /design-spec/
+    ├── Analyzes requirements, identifies technical constraints and open questions
+    │
+    ├── Output 1: /specs/PRD.md (feature requirements document)
+    └── Output 2: /specs/user-stories/*.md (formatted User Stories)
+```
+
+#### Step-by-Step Instructions
+
+**Step 1: Prepare design documents**
+
+Place design mockups or requirement descriptions in the `/design-spec/` directory, or describe them directly in the conversation.
+
+**Step 2: Trigger the agent**
+
+Use any of the following:
+
+```
+User: The designer finished the mockup for "shopping cart checkout flow",
+      create the corresponding user stories
+```
+
+```
+User: Review the current backlog and prioritize each feature
+      with story point estimates
+```
+
+```
+User: We need to define acceptance criteria for the "user notification settings" feature
+```
+
+**Step 3: Review the generated User Stories**
+
+The agent outputs formatted User Stories to `/specs/user-stories/`. Each story includes:
+
+```markdown
+## US-1.1 User can add item to cart
+
+**Priority:** P0
+**Story:** As a shopper, I want to click "Add to Cart" to add an item to my cart,
+           so that I can check out multiple items at once.
+
+**Acceptance Criteria:**
+- Given I am on the product page
+  When I click the "Add to Cart" button
+  Then the item appears in the cart with quantity 1
+
+- Given the item is already in the cart
+  When I click "Add to Cart" again
+  Then the cart quantity for that item increases by 1
+
+**Story Points:** 2
+**Dependencies:** None
+**Design Reference:** /design-spec/product-page.png
+**Technical Notes:** Requires POST /api/cart/items API, cart state stored in localStorage
+```
+
+#### Story Points Estimation Guide
+
+| Points | When to use |
+|--------|-------------|
+| 1 | Simple UI tweak, config change, text update |
+| 2 | Single component implementation, clear requirements |
+| 3 | Multiple components or moderate complexity |
+| 5 | Requires architectural consideration or extensive testing |
+| 8 | Cross-system integration, major feature, or high uncertainty |
+
+#### Priority Framework
+
+| Level | Definition | Impact |
+|-------|------------|--------|
+| P0 | Core MVP feature — app cannot demo without it | Blocks other features |
+| P1 | Significantly improves user experience | Differentiates from competitors |
+| P2 | Adds polish and delight | Can defer to v2 |
+
+#### Notes
+
+- **Every User Story must be independently developable and testable** — stories that fail this test must be split
+- **Open Questions must be explicitly marked** — the agent flags uncertain requirements as "Open Questions" rather than making assumptions
+- **Design document path** — the agent defaults to reading from `/design-spec/`; specify an alternative path in the conversation if needed
+
+---
+
+### 8. UI/UX Designer
+
+```yaml
+name: ui-ux-designer
+tools: Read, Write, Glob, Grep           # Claude Code
+tools: read_file, write_file, glob,
+       grep_search                       # Gemini CLI
+tools: read, edit, search               # GitHub Copilot CLI
+model: opus                              # Claude Code
+model: gemini-2.5-pro                    # Gemini CLI
+color: blue                              # Claude Code UI color label
+```
+
+#### When to Use
+
+| Scenario | Description |
+|----------|-------------|
+| UI component design | Buttons, cards, forms, notifications, modals, etc. |
+| Wireframing | Interactive flow sketches for a feature |
+| Design system | Color tokens, typography scale, spacing system |
+| User flow diagrams | Visual flows for multi-step interactions |
+| High-fidelity prototypes | Interactive mockups ready to show stakeholders |
+
+#### How It Works
+
+```
+User describes the design requirement
+    │
+    ▼
+Agent analyzes the request
+    │
+    ├── Creates design/ folder if it doesn't exist
+    └── Outputs interactive HTML/CSS prototype (always a visual file, never just text)
+```
+
+> **Core principle: Always output a previewable visual file.** This agent never gives you only text descriptions — every response must include at least one `.html` file saved in the `design/` folder, openable directly in a browser.
+
+#### Step-by-Step Instructions
+
+**Step 1: Trigger the agent**
+
+Describe your design requirement — the agent auto-detects and activates:
+
+```
+User: Design a notification card component with success, warning,
+      and error states that meets accessibility standards
+```
+
+```
+User: Build a complete design system with color tokens,
+      typography scale, and basic button components
+```
+
+```
+User: Create an interactive wireframe for the user login flow
+```
+
+**Step 2: Review the design output**
+
+The agent produces `.html` files in the `design/` folder, for example:
+
+```
+design/
+├── notification-card.html      # Notification component (all 3 states)
+├── design-system.html          # Design system documentation (interactive)
+└── login-flow-wireframe.html   # Login flow wireframe
+```
+
+Open any file directly in a browser to preview. All component states (hover, focus, active, disabled) are fully interactive.
+
+**Step 3: Verify the technical specifications**
+
+Every design file conforms to these standards:
+
+| Spec | Details |
+|------|---------|
+| Color system | `oklch()` color space — perceptually uniform, WCAG 2.2 contrast compliant |
+| Typography | CSS custom property type scale from `xs` to `2xl` |
+| Spacing | 4px base grid, `space-1` through `space-12` |
+| Responsiveness | Container Queries (component-level), not just media queries |
+| Animation | Includes `prefers-reduced-motion` fallback |
+| Accessibility | WCAG 2.2 AA: contrast ratio, target size ≥24px, keyboard nav, ARIA |
+
+#### 2026 Technology Standards
+
+This agent uses 2026 best practices, not outdated CSS conventions:
+
+| Technology | Description | Replaces |
+|------------|-------------|---------|
+| `oklch()` color space | Perceptually uniform, easier accessible palette design | `#hex`, `rgb()` |
+| CSS Container Queries | Component-level responsiveness, independent of viewport | Media queries only |
+| CSS Nesting | Maintainable nested styles, native browser support | SCSS/SASS nesting |
+| View Transitions API | Native page/state transition effects | Manual JavaScript animations |
+| WCAG 2.2 | Includes SC 2.5.8 pointer target size (≥24×24px) | WCAG 2.1 |
+
+#### AI-Native Interface Support (2026)
+
+If your product includes AI features, this agent can design:
+- Conversational UI (chat interfaces)
+- Streaming response progressive-display components
+- Human-in-the-loop confirmation patterns
+- AI confidence indicator visualizations
+- AI-generated content disclosure labels
+
+#### Notes
+
+- **All output is saved to the `design/` folder** — never elsewhere
+- **Always visual files** — "just output a CSS snippet" is not accepted; must be a standalone complete `.html` file
+- **All component states required** — default / hover / focus / active / disabled / error / loading (all seven)
+- **Developer-friendly** — every design file includes CSS custom property names and ARIA implementation notes for direct frontend reference
 
 ---
 
@@ -454,6 +824,7 @@ The tool names come from Gemini CLI's core built-in tool set as defined in the o
 | `read_file` | Read file contents |
 | `write_file` | Create or write to a file |
 | `list_directory` | List directory contents |
+| `glob` | Find files matching a glob pattern |
 | `grep_search` | Search files by content using regex (grep) |
 | `run_shell_command` | Run shell commands |
 | `google_web_search` | Search the web via Google Search |
@@ -471,44 +842,60 @@ The tool names come from Gemini CLI's core built-in tool set as defined in the o
 
 ## The Multi-Agent Pipeline
 
-> **The single unifying sentence:** By placing these five agent markdown files in your AI CLI's agent directory, the orchestrator will automatically dispatch each specialist in sequence — the **Senior Code Reviewer** enforces architecture and naming standards, the **Security Engineer** fetches live CVEs and maps every function to OWASP categories, the **Performance Optimizer** eliminates O(n²) bottlenecks and magic numbers, the **Documentation Writer** adds inline comments and keeps all README files synchronized with the live codebase, and the **Malicious Software Analyst** hunts for backdoors, credential leaks, and supply chain attacks using live MITRE ATT&CK intelligence — forming one seamless, fully automated development quality pipeline where five sub-agents work in concert so that every code change is reviewed, hardened, optimized, documented, and threat-scanned with zero manual intervention.
+> **The single unifying sentence:** By placing these eight agent markdown files in your AI CLI's agent directory, the orchestrator gains two complete pipelines — the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) shapes the idea into a spec and prototype; the **Development Quality Pipeline** (Senior Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst) then takes that implementation through automated review, security hardening, optimization, documentation, and threat scanning — eight sub-agents forming one seamless workflow from product idea to production-ready code.
 
 ```
-Code written / modified
+User describes a project idea
         │
         ▼
-┌─────────────────────────┐
-│   Senior Code Reviewer  │  SOLID · DRY · KISS · YAGNI
-│   tools: Read Glob Grep │  anti-patterns · naming standards
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   Security Engineer     │  OWASP Top 10 (live) · CWE · CVE
-│   tools: +WebSearch     │  dependency audit · full project scan
-│          +WebFetch Bash │
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   Performance Optimizer │  time complexity O() · readability
-│   tools: Read Write     │  maintainability · debuggability
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│   Documentation Writer  │  inline comments · file/fn headers
-│   tools: +Glob Grep     │  README sync · completeness sweep
-└───────────┬─────────────┘
-            │
-            ▼
-┌─────────────────────────┐
-│  Malicious Software     │  SAST · MITRE ATT&CK · IOC feeds
-│  Analysis               │  reverse shells · supply chain
-│  tools: +Bash +Web*     │  obfuscation · credential leaks
-└─────────────────────────┘
-            │
-            ▼
+┌─────────────────────────────┐
+│  AI DLC Sprint Product Owner │  Mandatory Q&A (9 questions) → 12-section PRD
+│  tools: Write                │  User priority ordering · Day-by-Day plan
+└────────────┬────────────────┘
+             │ PRD complete — development begins
+             ▼
+┌─────────────────────────────┐
+│  TPM Product Manager         │  Design mockup → User Stories
+│  tools: Read Write Glob Grep │  Backlog ordering · Story Points
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│  UI/UX Designer              │  Interactive HTML/CSS prototypes → design/
+│  tools: Read Write Glob Grep │  WCAG 2.2 · oklch() · Container Queries
+└────────────┬────────────────┘
+             │ Design complete — implementation begins
+             ▼
+┌─────────────────────────────┐
+│   Senior Code Reviewer       │  SOLID · DRY · KISS · YAGNI
+│   tools: Read Glob Grep      │  Anti-pattern detection · naming standards
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│   Security Engineer          │  OWASP Top 10 (live) · CWE · CVE
+│   tools: +WebSearch +Bash    │  Dependency audit · full project scan
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│   Performance Optimizer      │  Time complexity O() · readability
+│   tools: Read Write          │  Maintainability · debuggability
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│   Documentation Writer       │  Inline comments · file/fn headers
+│   tools: +Glob Grep          │  README sync · completeness sweep
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│  Malicious Software Analysis │  SAST · MITRE ATT&CK · IOC feeds
+│  tools: +Bash +Web*          │  Reverse shells · supply chain · credential leaks
+└─────────────────────────────┘
+             │
+             ▼
     Production-ready code
 ```
 
@@ -523,6 +910,21 @@ Each agent's `description` field contains keyword triggers. When you write code 
 5. Reports are returned to the main conversation
 
 This means you never need to manually call an agent by name — the system routes automatically, each expert handles its domain, and the combined output covers the full quality lifecycle.
+
+---
+
+## Cross-Platform Tool Name Reference
+
+| Function | Claude Code CLI | GitHub Copilot CLI | Gemini CLI |
+|----------|----------------|-------------------|------------|
+| Read file | `Read` | `read` (alias: `Read`) | `read_file` |
+| Write file | `Write` | `edit` (alias: `Write`) | `write_file` |
+| Search content | `Grep` | `search` (alias: `Grep`) | `grep_search` |
+| Search files | `Glob` | `search` (alias: `Glob`) | `glob` |
+| Run command | `Bash` | `execute` (alias: `Bash`) | `run_shell_command` |
+| List directory | `LS` | `execute` (run `ls`) | `list_directory` |
+| Web search | `WebSearch` | `web` (alias: `WebSearch`) | `google_web_search` |
+| Fetch URL | `WebFetch` | `web` (alias: `WebFetch`) | `web_fetch` |
 
 ---
 
