@@ -5,7 +5,7 @@
 [![GitHub Copilot CLI](https://img.shields.io/badge/GitHub%20Copilot-CLI-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
 
-> **一句話串聯所有功能：** 只需將這八份 agent markdown 部署至相容的 AI CLI（Claude Code／GitHub Copilot／Gemini），AI 即可同時具備兩條完整的工作流水線——**開發品質流水線**（程式碼審查 → 資安工程師 → 效能優化 → 文件撰寫 → 惡意軟體分析）自動在每次程式碼變更時觸發；**產品與設計流水線**（Sprint 產品負責人 → TPM 產品經理 → UI/UX 設計師）在你發想新功能或啟動新專案時按需啟動——八位專業 sub-agent 各司其職，讓 AI CLI 成為你完整的全端開發夥伴。
+> **一句話串聯所有功能：** 只需將這九份 agent markdown 部署至相容的 AI CLI（Claude Code／GitHub Copilot／Gemini），AI 即可同時具備兩條完整的工作流水線——**開發品質流水線**（程式碼審查 → 資安工程師 → 效能優化 → 品質保證工程師 → 文件撰寫 → 惡意軟體分析）自動在每次程式碼變更時觸發；**產品與設計流水線**（Sprint 產品負責人 → TPM 產品經理 → UI/UX 設計師）在你發想新功能或啟動新專案時按需啟動——九位專業 sub-agent 各司其職，讓 AI CLI 成為你完整的全端開發夥伴。
 
 ---
 
@@ -27,6 +27,10 @@
   - [6. AI DLC Sprint Product Owner — Sprint 產品負責人](#6-ai-dlc-sprint-product-owner--sprint-產品負責人)
   - [7. TPM Product Manager — 技術產品經理](#7-tpm-product-manager--技術產品經理)
   - [8. UI/UX Designer — 資深 UI/UX 設計師](#8-uiux-designer--資深-uiux-設計師)
+  - [9. Quality Assurance Engineer — 品質保證工程師](#9-quality-assurance-engineer--品質保證工程師)
+- [完整工作流程 SOP 指南](#完整工作流程-sop-指南)
+  - [SOP A：全新專案——從零到上線部署](#sop-a全新專案從零到上線部署)
+  - [SOP B：既有專案品質大補全](#sop-b既有專案品質大補全)
 - [`tools` 參數名稱從何而來？](#tools-參數名稱從何而來)
   - [Claude Code CLI](#claude-code-cli)
   - [GitHub Copilot CLI](#github-copilot-cli)
@@ -50,7 +54,7 @@
 
 YAML frontmatter 之後是 agent 的系統提示詞（system prompt），定義了角色身份、逐步執行流程與結構化輸出格式。
 
-**安裝一次 → AI CLI 立即獲得八位專業協作夥伴**，涵蓋程式碼品質、資安、效能、文件、惡意軟體偵測、產品規劃、專案管理、UI/UX 設計的完整工作鏈。
+**安裝一次 → AI CLI 立即獲得九位專業協作夥伴**，涵蓋程式碼品質、資安、效能、QA 測試規劃、文件、惡意軟體偵測、產品規劃、專案管理、UI/UX 設計的完整工作鏈。
 
 ---
 
@@ -68,7 +72,8 @@ agents-markdown/
 │       ├── malicious-software-analysis.md   # SAST + 惡意軟體偵測
 │       ├── ai-dlc-sprint-product-owner.md   # Sprint PRD 生成（強制問答）
 │       ├── tpm-product-manager.md           # User Story + Backlog 管理
-│       └── ui-ux-designer.md                # HTML/CSS 互動式原型設計
+│       ├── ui-ux-designer.md                # HTML/CSS 互動式原型設計
+│       └── quality-assurance-engineer.md    # 測試計畫 + 六大類型 100% 覆蓋率
 │
 ├── github-copilot-cli/
 │   └── agents/
@@ -79,7 +84,8 @@ agents-markdown/
 │       ├── malicious-software-analysis.agent.md
 │       ├── ai-dlc-sprint-product-owner.agent.md
 │       ├── tpm-product-manager.agent.md
-│       └── ui-ux-designer.agent.md
+│       ├── ui-ux-designer.agent.md
+│       └── quality-assurance-engineer.agent.md
 │
 └── gemini-cli/
     └── agents/
@@ -90,7 +96,8 @@ agents-markdown/
         ├── malicious-software-analysis.md   # 使用 Gemini 2.5 Pro
         ├── ai-dlc-sprint-product-owner.md   # 使用 Gemini 2.5 Pro
         ├── tpm-product-manager.md           # 使用 Gemini 2.5 Pro
-        └── ui-ux-designer.md                # 使用 Gemini 2.5 Pro
+        ├── ui-ux-designer.md                # 使用 Gemini 2.5 Pro
+        └── quality-assurance-engineer.md    # 使用 Gemini 2.5 Pro
 ```
 
 ---
@@ -151,6 +158,7 @@ cp gemini-cli/agents/*.md ~/.gemini/agents/
 | `performance-optimizer` | 效能品質工程師 | `optimize`、`slow`、`bottleneck`、`complexity` | 複雜度分析 + 優化後程式碼 |
 | `documentation-writer` | 技術文件工程師 | 程式碼定稿、`document`、`annotate`、`explain code` | 行內註解 + README 同步 |
 | `malicious-software-analysis` | 網路安全研究員 | `malware`、`backdoor`、`supply chain`、`scan` | SAST 報告 + 修復清單 |
+| `quality-assurance-engineer` | QA 工程師，20+ 年 | `write tests`、`test plan`、`QA`、`coverage`、`edge cases`、`testability` | 測試計畫 + 六大類型 100% 覆蓋率 |
 
 ---
 
@@ -715,6 +723,434 @@ design/
 
 ---
 
+## 品質保證 Agent
+
+### 9. Quality Assurance Engineer — 品質保證工程師
+
+```yaml
+name: quality-assurance-engineer
+tools: Read, Write, Glob, Grep              # Claude Code
+tools: read, edit, search                   # GitHub Copilot CLI
+tools: read_file, write_file, glob, grep_search  # Gemini CLI
+model: sonnet                               # Claude Code
+model: gemini-2.5-pro                       # Gemini CLI
+color: green                                # Claude Code 介面顏色標籤
+```
+
+**角色身份：** 擁有 20+ 年資歷的資深品質保證工程師暨測試策略專家（Senior Quality Assurance Engineer & Test Strategy Expert）。
+
+**觸發時機：** 當你明確要求測試規劃或產生測試案例時，以及對話中出現 `write tests`、`test plan`、`test cases`、`QA`、`coverage`、`edge cases`、`acceptance criteria`、`testability`、`missing tests` 等詞彙時。
+
+**功能說明：**
+針對每種測試類型產生達成 **100% 測試案例覆蓋率** 的完整測試套件。驗證 User Story 的可測試性、找出遺漏的測試場景、揭露邊界情況，並產出完整、可執行的測試計畫。
+
+**六大測試類型——每種皆需達到 100% 覆蓋率：**
+
+| 測試類型 | 覆蓋範圍 |
+|---------|---------|
+| 單元測試（Unit） | 每個公開函式/方法、每個分支條件（true+false）、每個錯誤路徑、邊界值（min/max/null/empty） |
+| 整合測試（Integration） | 服務間呼叫、DB CRUD、外部 API（成功/逾時/錯誤）、訊息佇列 |
+| 端對端測試（E2E） | 完整使用者流程、導航、資料持久化、Session 到期、Deep-link |
+| 安全測試（Security） | SQL injection、XSS、CSRF、身份驗證/授權、提權攻擊、敏感資料洩漏 |
+| 效能測試（Performance） | SLA 閾值、峰值負載、記憶體洩漏偵測、並發/競爭條件 |
+| 無障礙測試（Accessibility） | WCAG 2.1 AA、鍵盤導航、ARIA 標籤、色彩對比度、焦點管理 |
+
+**執行流程：**
+
+| 步驟 | 動作 |
+|------|------|
+| 1 | **可測試性分析** — 標記任何模糊、無法量測或無法獨立驗證的 AC |
+| 2 | **覆蓋率矩陣** — 將每個 AC 對應到六種測試類型所需的測試案例 |
+| 3 | **產生測試案例** — Given-When-Then 格式：正常流程 → 替代流程 → 錯誤路徑 → 邊界條件 |
+| 4 | **缺口分析** — 問「還有什麼可能出錯？」並持續新增測試案例，直到找不到新場景 |
+| 5 | **100% 覆蓋率檢查清單** — 在宣告測試套件完成前，逐項驗證清單 |
+
+**測試案例格式：**
+```
+### TC-[類型]-[編號]: [描述性標題]
+**Given**：[初始狀態與前置條件]
+**When**：[動作或事件]
+**Then**：[預期結果——具體且可量測]
+**邊界情況**：[邊界條件 → 預期行為]
+**測試資料**：[精確數值、邊界輸入、Mock 定義]
+```
+
+**輸出格式：**
+```
+## Test Plan：[功能名稱]
+
+### 可測試性分析
+[標記有問題的 AC 並提供改寫建議]
+
+### 覆蓋率矩陣
+| AC | Unit | Integration | E2E | Security | Perf | A11y | 總計 |
+
+### 測試案例
+[TC-UNIT-xxx / TC-INT-xxx / TC-E2E-xxx / TC-SEC-xxx / TC-PERF-xxx / TC-A11Y-xxx]
+
+### 測試資料需求
+[Fixtures、Mocks、Seed 資料、環境前置條件]
+
+### 覆蓋率摘要
+總 AC 數：X | 產生的測試案例：Y | 覆蓋率：100%
+```
+
+---
+
+## 完整工作流程 SOP 指南
+
+以下兩份 SOP 說明如何按正確順序使用所有九位 agent，對應兩種常見情境。請依序完成每個階段以獲得最佳結果。
+
+---
+
+### SOP A：全新專案——從零到上線部署
+
+適用於從零開始、尚無既有程式碼的全新專案。
+
+#### 階段總覽
+
+| 階段 | Agent | 輸入 | 輸出 |
+|------|-------|------|------|
+| 1 — 產品定義 | `ai-dlc-sprint-product-owner` | 你的專案構想（自然語言） | 12 區塊 PRD |
+| 2 — 需求與使用者故事 | `tpm-product-manager` | 第 1 階段的 PRD | User Stories + Backlog |
+| 3 — UI/UX 設計 | `ui-ux-designer` | User Stories + 設計意圖 | `design/` 中的 HTML/CSS 原型 |
+| 4 — 實作 | *（你來撰寫程式碼）* | 設計稿 + User Stories | 原始碼 |
+| 5 — 程式碼審查 | `senior-code-reviewer` | 新增/修改的程式碼 | 審查報告 + 重構後程式碼 |
+| 6 — 資安稽核 | `security-engineer` | 審查後的程式碼 | 漏洞報告 + 修補後程式碼 |
+| 7 — 效能優化 | `performance-optimizer` | 修補後的程式碼 | 複雜度表 + 優化後程式碼 |
+| 8 — 測試規劃 | `quality-assurance-engineer` | User Stories + 程式碼 | 完整測試計畫（6 種類型，100% 覆蓋率） |
+| 9 — 技術文件 | `documentation-writer` | 定稿的程式碼 | 行內註解 + README 同步 |
+| 10 — 最終資安掃描 | `malicious-software-analysis` | 完整程式碼庫 | SAST 報告 |
+| 11 — 部署 | *（你來部署）* | 生產就緒的程式碼 | 上線應用程式 |
+
+---
+
+#### 第 1 階段：產品定義
+
+**Agent：** `ai-dlc-sprint-product-owner`
+
+用自然語言描述你的專案構想。Agent 在產出 PRD 前會執行**強制 9 題問答**（每次一組，共三組各 3 題）。
+
+**範例提示詞：**
+```
+I want to build a task management app that syncs across devices,
+supports team collaboration, and includes a time-tracking feature.
+I want to launch an MVP in 72 hours.
+```
+
+**你將收到：** 一份完整的 12 區塊 PRD，儲存為 `.md` 檔案——包含執行計畫、技術選型、資料夾結構與逐日時間表。
+
+**進入下一步前：** 確認 PRD 準確反映你的優先順序。若有任何區塊不符合你的意圖，請要求 agent 修改。
+
+---
+
+#### 第 2 階段：需求與使用者故事
+
+**Agent：** `tpm-product-manager`
+
+提供第 1 階段的 PRD，並要求結構化的 User Story。
+
+**範例提示詞：**
+```
+Based on the PRD at /specs/project-prd.md, create formal User Stories
+for all P0 features with Given-When-Then acceptance criteria and story point estimates.
+```
+
+**你將收到：**
+- `/specs/PRD.md` — 精煉後的功能需求文件
+- `/specs/user-stories/*.md` — 包含優先順序、Story Points、驗收條件與設計參考的 User Story
+
+**進入下一步前：** 每個 P0 User Story 都必須有至少一個清晰、可量測的驗收條件。模糊的 AC 稍後會被 QA 工程師標記出來。
+
+---
+
+#### 第 3 階段：UI/UX 設計
+
+**Agent：** `ui-ux-designer`
+
+針對 User Story 中定義的功能，要求設計原型。
+
+**範例提示詞：**
+```
+Based on the user stories in /specs/user-stories/, design:
+1. Main dashboard layout (task list + sidebar navigation)
+2. Task creation form (modal dialog)
+3. Team member invitation flow
+Save all interactive prototypes to the design/ folder.
+```
+
+**你將收到：** `design/` 資料夾中的互動式 `.html` 檔案——可直接用瀏覽器開啟，所有元件狀態（hover、focus、active、disabled、error）皆完整可互動。
+
+**進入下一步前：** 用瀏覽器開啟每個原型。確認所有必要狀態都存在、所有流程正確，且符合無障礙要求（WCAG 2.1 AA）。
+
+---
+
+#### 第 4 階段：實作
+
+**執行者：** 你（開發者）
+
+根據 User Story 與設計原型撰寫程式碼。以 PRD 中的資料夾結構作為專案鷹架。
+
+**清單：**
+- [ ] 使用 PRD 中的資料夾結構初始化專案
+- [ ] 依優先順序（P0 優先）逐一實作每個 User Story
+- [ ] 每個功能完成後，驗證其符合驗收條件再繼續下一個
+
+---
+
+#### 第 5 階段：程式碼審查
+
+**Agent：** `senior-code-reviewer`
+
+程式碼撰寫/修改後**自動觸發**。如需明確觸發：
+```
+Review all recently written code for SOLID violations,
+anti-patterns, DRY violations, and naming issues.
+```
+
+**你將收到：** 涵蓋所有修改檔案的嚴重性排序問題表（HIGH/MED/LOW），以及問題程式碼的重構版本。
+
+**進入下一步前：** 解決所有 HIGH 和 MED 嚴重性問題。
+
+---
+
+#### 第 6 階段：資安稽核
+
+**Agent：** `security-engineer`
+
+程式碼變更後**自動觸發**。如需明確觸發：
+```
+Run a full security audit on the entire codebase using the current
+year's OWASP Top 10. Fetch live CVEs for all dependencies.
+```
+
+**你將收到：** 對應到 OWASP 類別與 CVE ID 的漏洞清單、每個發現的修補程式碼，以及完整的相依套件稽核結果。
+
+**進入下一步前：** 在繼續之前，套用所有 HIGH 嚴重性資安修復。
+
+---
+
+#### 第 7 階段：效能優化
+
+**Agent：** `performance-optimizer`
+
+```
+Analyze time complexity for every function in the project and
+report all readability, maintainability, and debuggability issues.
+```
+
+**你將收到：** 每個函式的複雜度表（目前 O() vs 最佳 O()）、按檔案列出的品質問題，以及任何未達標算法的優化重寫版本。
+
+**進入下一步前：** 套用所有優化，並再次用 agent 驗證。
+
+---
+
+#### 第 8 階段：測試規劃
+
+**Agent：** `quality-assurance-engineer`
+
+```
+Based on the user stories in /specs/user-stories/ and the code in /src/,
+generate a complete test plan covering Unit, Integration, E2E, Security,
+Performance, and Accessibility tests. Ensure 100% scenario coverage for
+every test type.
+```
+
+**你將收到：**
+- 可測試性分析（標記任何模糊的 AC 並提供改寫建議）
+- 將每個 AC 對應到全部 6 種測試類型的覆蓋率矩陣
+- Given-When-Then 格式的所有測試案例
+- 測試資料需求（fixtures、mocks、seed 資料）
+- 100% 覆蓋率檢查清單
+
+**進入下一步前：** 實作所有產生的測試案例。執行它們。修復任何失敗後再繼續。
+
+---
+
+#### 第 9 階段：技術文件
+
+**Agent：** `documentation-writer`
+
+程式碼定稿後**自動觸發**。如需明確觸發：
+```
+Add comprehensive inline comments to all source files and perform
+a full documentation sweep to sync all markdown docs with the
+current codebase.
+```
+
+**你將收到：** 每個檔案標頭與函式以英文撰寫的完整文件，所有 README 與 `docs/*.md` 檔案皆已驗證並更新以符合實際程式碼。
+
+**進入下一步前：** 確認 README 包含正確且最新的部署說明。
+
+---
+
+#### 第 10 階段：最終資安掃描
+
+**Agent：** `malicious-software-analysis`
+
+```
+Perform a comprehensive malware and SAST scan on the entire repository
+before deployment. Fetch live threat intelligence, then check for
+backdoors, hardcoded credentials, supply chain attacks, and obfuscated code.
+```
+
+**你將收到：** 整體風險等級（CRITICAL / HIGH / MEDIUM / LOW）、按嚴重性排序的所有發現，以及優先修復清單。
+
+**部署前的門檻：** 在報告顯示整體風險為 **LOW** 或 **CLEAR** 之前，不得部署。
+
+---
+
+#### 第 11 階段：部署
+
+完成所有 10 個階段，代表你已擁有：
+- ✅ PRD 與 User Story 作為活文件
+- ✅ `design/` 中的互動式設計原型
+- ✅ 通過 SOLID、DRY、KISS 審查的程式碼
+- ✅ 所有 HIGH 資安漏洞已修補
+- ✅ 無 O(n²)+ 算法殘留
+- ✅ 六大測試類型 100% 覆蓋率的完整測試套件
+- ✅ 所有程式碼與文件已完整記錄
+- ✅ 最終資安掃描：LOW 或 CLEAR
+
+**你的程式碼已達生產就緒標準，放心部署。**
+
+---
+
+### SOP B：既有專案品質大補全
+
+適用於已有程式碼庫，想系統性提升程式碼品質、資安、測試覆蓋率與技術文件的情境。
+
+#### 階段總覽
+
+| 步驟 | Agent | 執行內容 |
+|------|-------|---------|
+| 1 — 程式碼品質 | `senior-code-reviewer` | 找出所有架構與程式碼品質問題 |
+| 2 — 資安 | `security-engineer` | 依當年度 OWASP Top 10 + 即時 CVE 進行稽核 |
+| 3 — 效能 | `performance-optimizer` | 修復 O(n²)+ 算法與品質違規 |
+| 4 — 測試覆蓋率 | `quality-assurance-engineer` | 補足缺少的測試，達成六大類型 100% 覆蓋率 |
+| 5 — 技術文件 | `documentation-writer` | 加入行內註解 + 同步所有 markdown 文件 |
+| 6 — 最終掃描 | `malicious-software-analysis` | 重新發布前的 SAST 掃描 |
+
+---
+
+#### 步驟 1：程式碼品質稽核
+
+**Agent：** `senior-code-reviewer`
+
+```
+Review all source files in this project for SOLID violations,
+anti-patterns, DRY violations, naming issues, and excessive complexity.
+Report all findings with HIGH/MED/LOW severity and suggest fixes.
+```
+
+**預期結果：** 涵蓋每個檔案的完整問題表。在進入步驟 2 前，處理所有 HIGH 和 MED 項目。
+
+---
+
+#### 步驟 2：資安強化
+
+**Agent：** `security-engineer`
+
+```
+Perform a complete security audit of the entire codebase.
+Fetch the current year's OWASP Top 10 and live CVEs.
+Scan all source files and run dependency audits (npm audit / pip-audit / go list).
+Report all vulnerabilities with severity, CWE ID, and a code fix.
+```
+
+**預期結果：** 所有發現對應到 OWASP 類別並附修補程式碼。特別注意相依套件漏洞——這是既有專案最常見的問題。
+
+---
+
+#### 步驟 3：效能優化
+
+**Agent：** `performance-optimizer`
+
+```
+Analyze time complexity for every function in the project.
+Identify and rewrite any O(n²) or worse algorithms.
+Flag all readability, maintainability, and debuggability issues.
+```
+
+**預期結果：** 每個函式的複雜度表，以及任何未達複雜度門檻（O(n²) 標記、O(2ⁿ) 或更差直接拒絕並重寫）的優化版本。
+
+---
+
+#### 步驟 4：補足測試覆蓋率
+
+**Agent：** `quality-assurance-engineer`
+
+這一步通常是既有專案中影響最大的改善項目。
+
+```
+Analyze the existing tests in /tests/ (or /test/, /__tests__/, /spec/) and
+the source code in /src/.
+Identify all gaps in coverage and generate missing test cases to achieve
+100% coverage across Unit, Integration, E2E, Security, Performance,
+and Accessibility test types.
+Flag any Acceptance Criteria that are untestable and suggest rewrites.
+```
+
+**預期結果：**
+- 所有未測試的程式碼路徑、邊界情況與錯誤條件一一找出
+- 每個缺口以 Given-When-Then 格式補足新測試案例
+- 顯示前後對比的更新覆蓋率矩陣
+- 100% 覆蓋率檢查清單
+
+**既有專案常見的覆蓋率缺口：**
+- 錯誤/例外路徑未測試
+- 邊界值（null、空字串、最大長度）缺失
+- 無資安測試（注入攻擊、身份驗證繞過）
+- 無無障礙檢查（鍵盤導航、ARIA）
+- 從未定義效能基準
+
+---
+
+#### 步驟 5：補齊技術文件
+
+**Agent：** `documentation-writer`
+
+```
+Perform a full documentation sweep:
+1. Add inline comments to all undocumented files and functions
+2. Cross-reference every README, docs/*.md, and .github/*.md
+   with the current codebase
+3. Update any outdated API examples, function signatures, or CLI flags
+4. Add documentation for any new public APIs that have no docs
+```
+
+**預期結果：** 每個檔案標頭與函式皆已記錄，所有 markdown 檔案已驗證並更新以符合當前程式碼。已廢棄的 API 標示為 `[DEPRECATED — removed in <version>]`。
+
+---
+
+#### 步驟 6：最終惡意軟體掃描
+
+**Agent：** `malicious-software-analysis`
+
+```
+Perform a comprehensive SAST scan on the entire repository.
+Fetch live threat intelligence (OWASP, MITRE ATT&CK, CVE, ThreatFox IOC).
+Check for backdoors, hardcoded credentials, supply chain attacks,
+obfuscated code, and reverse shell patterns.
+```
+
+**門檻：在掃描顯示整體風險為 LOW 或 CLEAR 之前，不得重新發布或部署。**
+
+---
+
+#### 完成檢查清單
+
+完成所有 6 個步驟後：
+- [ ] 所有 HIGH 和 MED 程式碼審查問題已解決
+- [ ] 所有 HIGH 資安漏洞已修補，相依套件已稽核
+- [ ] 所有 O(n²)+ 算法已重寫
+- [ ] 六大測試類型測試套件達 100% 覆蓋率
+- [ ] 所有檔案與函式已以英文記錄
+- [ ] 所有 markdown 文件已與當前程式碼同步
+- [ ] 最終資安掃描：LOW 或 CLEAR
+
+---
+
 ## `tools` 參數名稱從何而來？
 
 每個 agent frontmatter 中的 `tools` 欄位，限制了該 sub-agent 可以呼叫哪些內建工具。每個 CLI 平台有自己的工具名稱詞彙表。
@@ -842,6 +1278,12 @@ design/
 ┌─────────────────────────────┐
 │   Performance Optimizer      │  時間複雜度 O() · 可讀性
 │   tools: Read Write          │  可維護性 · 可偵錯性
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│  Quality Assurance Engineer  │  Unit/Integration/E2E/Security/Perf/A11y
+│  tools: Read Write Glob Grep │  100% 覆蓋率 · Given-When-Then · 測試計畫
 └────────────┬────────────────┘
              │
              ▼

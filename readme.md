@@ -5,7 +5,7 @@
 [![GitHub Copilot CLI](https://img.shields.io/badge/GitHub%20Copilot-CLI-blue)](https://github.com/features/copilot)
 [![Gemini CLI](https://img.shields.io/badge/Gemini%20CLI-Google-green)](https://github.com/google-gemini/gemini-cli)
 
-> **One sentence to connect everything:** Deploy these eight specialist agent markdowns into any compatible AI CLI (Claude Code / GitHub Copilot / Gemini), and your AI instantly gains two complete pipelines — the **Development Quality Pipeline** (Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst) fires automatically on every code change; the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) activates on demand when you plan a new feature or start a new project — eight sub-agents, each owning its domain, making your AI CLI a complete full-stack development partner.
+> **One sentence to connect everything:** Deploy these nine specialist agent markdowns into any compatible AI CLI (Claude Code / GitHub Copilot / Gemini), and your AI instantly gains two complete pipelines — the **Development Quality Pipeline** (Code Reviewer → Security Engineer → Performance Optimizer → Quality Assurance Engineer → Documentation Writer → Malicious Software Analyst) fires automatically on every code change; the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) activates on demand when you plan a new feature or start a new project — nine sub-agents, each owning its domain, making your AI CLI a complete full-stack development partner.
 
 ---
 
@@ -27,6 +27,10 @@
   - [6. AI DLC Sprint Product Owner](#6-ai-dlc-sprint-product-owner)
   - [7. TPM Product Manager](#7-tpm-product-manager)
   - [8. UI/UX Designer](#8-uiux-designer)
+  - [9. Quality Assurance Engineer](#9-quality-assurance-engineer)
+- [Complete Workflow SOPs](#complete-workflow-sops)
+  - [SOP A: New Project — Zero to Deployed](#sop-a-new-project--zero-to-deployed)
+  - [SOP B: Existing Project Quality Upgrade](#sop-b-existing-project-quality-upgrade)
 - [Where Do `tools` Parameter Names Come From?](#where-do-tools-parameter-names-come-from)
   - [Claude Code CLI](#claude-code-cli)
   - [GitHub Copilot CLI](#github-copilot-cli)
@@ -50,7 +54,7 @@ This repository provides **ready-to-use AI sub-agent definition files** for thre
 
 The agent's system prompt follows the frontmatter — defining the agent's persona, step-by-step procedures, and structured output format.
 
-**Install once → your AI CLI gains eight specialized co-workers** covering the complete workflow: code quality, security, performance, documentation, malware detection, product planning, project management, and UI/UX design.
+**Install once → your AI CLI gains nine specialized co-workers** covering the complete workflow: code quality, security, performance, QA test planning, documentation, malware detection, product planning, project management, and UI/UX design.
 
 ---
 
@@ -68,7 +72,8 @@ agents-markdown/
 │       ├── malicious-software-analysis.md   # SAST + malware detection
 │       ├── ai-dlc-sprint-product-owner.md   # Sprint PRD generation (mandatory Q&A)
 │       ├── tpm-product-manager.md           # User Stories + Backlog management
-│       └── ui-ux-designer.md                # Interactive HTML/CSS prototype design
+│       ├── ui-ux-designer.md                # Interactive HTML/CSS prototype design
+│       └── quality-assurance-engineer.md    # Test plan + 100% coverage (6 types)
 │
 ├── github-copilot-cli/
 │   └── agents/
@@ -79,7 +84,8 @@ agents-markdown/
 │       ├── malicious-software-analysis.agent.md
 │       ├── ai-dlc-sprint-product-owner.agent.md
 │       ├── tpm-product-manager.agent.md
-│       └── ui-ux-designer.agent.md
+│       ├── ui-ux-designer.agent.md
+│       └── quality-assurance-engineer.agent.md
 │
 └── gemini-cli/
     └── agents/
@@ -90,7 +96,8 @@ agents-markdown/
         ├── malicious-software-analysis.md   # Uses Gemini 2.5 Pro
         ├── ai-dlc-sprint-product-owner.md   # Uses Gemini 2.5 Pro
         ├── tpm-product-manager.md           # Uses Gemini 2.5 Pro
-        └── ui-ux-designer.md                # Uses Gemini 2.5 Pro
+        ├── ui-ux-designer.md                # Uses Gemini 2.5 Pro
+        └── quality-assurance-engineer.md    # Uses Gemini 2.5 Pro
 ```
 
 ---
@@ -151,6 +158,7 @@ After installation, agents **activate automatically** — no manual invocation n
 | `performance-optimizer` | Perf & Quality Engineer | `optimize`, `slow`, `bottleneck`, `complexity`, `refactor` | Complexity analysis + optimized code |
 | `documentation-writer` | Tech Docs Engineer | code finalized, `document`, `annotate`, `explain code` | Inline comments + README sync |
 | `malicious-software-analysis` | Cybersecurity Researcher | `malware`, `backdoor`, `supply chain`, `scan`, `obfuscation` | SAST report + remediation list |
+| `quality-assurance-engineer` | QA Engineer, 20+ yrs | `write tests`, `test plan`, `QA`, `coverage`, `edge cases`, `testability` | Test plan + 100% coverage across 6 types |
 
 ---
 
@@ -740,6 +748,434 @@ If your product includes AI features, this agent can design:
 
 ---
 
+## Quality Assurance Agent
+
+### 9. Quality Assurance Engineer
+
+```yaml
+name: quality-assurance-engineer
+tools: Read, Write, Glob, Grep              # Claude Code
+tools: read, edit, search                   # GitHub Copilot CLI
+tools: read_file, write_file, glob, grep_search  # Gemini CLI
+model: sonnet                               # Claude Code
+model: gemini-2.5-pro                       # Gemini CLI
+color: green                                # Claude Code UI color label
+```
+
+**Persona:** Senior Quality Assurance Engineer and Test Strategy Expert with 20+ years of experience.
+
+**When it fires:** When you explicitly request test planning or test generation, and on keywords: `write tests`, `test plan`, `test cases`, `QA`, `coverage`, `edge cases`, `acceptance criteria`, `testability`, `missing tests`.
+
+**What it does:**
+Generates comprehensive test suites achieving **100% test case coverage for every test type**. Validates User Story testability, surfaces missing scenarios, uncovers edge cases, and produces a complete, executable test plan.
+
+**6 Test Types — All Required at 100% Coverage:**
+
+| Test Type | Coverage Requirements |
+|-----------|----------------------|
+| Unit | Every public function/method, every branch (true+false), every error path, boundary values (min/max/null/empty) |
+| Integration | Every service-to-service call, DB CRUD, external API (success/timeout/error), message queues |
+| E2E | Complete user flows, navigation, data persistence, session expiry, deep-links |
+| Security | SQL injection, XSS, CSRF, auth/authz, privilege escalation, sensitive data exposure |
+| Performance | SLA thresholds, peak load, memory leak detection, concurrency/race conditions |
+| Accessibility | WCAG 2.1 AA, keyboard navigation, ARIA labels, color contrast, focus management |
+
+**Working Process:**
+
+| Step | Action |
+|------|--------|
+| 1 | **Testability Analysis** — flag any AC that is vague, unmeasurable, or not independently testable |
+| 2 | **Coverage Matrix** — map every AC to required test cases across all 6 types |
+| 3 | **Generate Test Cases** — Given-When-Then format: happy path → alternates → errors → boundaries |
+| 4 | **Gap Analysis** — ask "What could still go wrong?" and add test cases until no new scenarios remain |
+| 5 | **100% Coverage Checklist** — verify every item before declaring the test suite complete |
+
+**Test Case Format:**
+```
+### TC-[TYPE]-[NUMBER]: [Descriptive Title]
+**Given**: [Initial state and preconditions]
+**When**: [Action or event]
+**Then**: [Expected outcome — specific, measurable]
+**Edge Cases**: [Edge case → expected behavior]
+**Test Data**: [Exact values, boundary inputs, mock definitions]
+```
+
+**Output format:**
+```
+## Test Plan: [Feature Name]
+
+### Testability Analysis
+[Flagged ACs with suggested rewrites]
+
+### Coverage Matrix
+| AC | Unit | Integration | E2E | Security | Perf | A11y | Total TCs |
+
+### Test Cases
+[TC-UNIT-xxx / TC-INT-xxx / TC-E2E-xxx / TC-SEC-xxx / TC-PERF-xxx / TC-A11Y-xxx]
+
+### Test Data Requirements
+[Fixtures, mocks, seed data, environment prerequisites]
+
+### Coverage Summary
+Total ACs: X | Test Cases Generated: Y | Coverage: 100%
+```
+
+---
+
+## Complete Workflow SOPs
+
+These two SOPs show you exactly how to use all nine agents together in the right order for two common scenarios. Follow each phase in sequence for best results.
+
+---
+
+### SOP A: New Project — Zero to Deployed
+
+Use this guide when starting a completely new project with no existing codebase.
+
+#### Phase Overview
+
+| Phase | Agent | Input | Output |
+|-------|-------|-------|--------|
+| 1 — Product Definition | `ai-dlc-sprint-product-owner` | Your project idea (natural language) | 12-section PRD |
+| 2 — Requirements & Stories | `tpm-product-manager` | PRD from Phase 1 | User Stories + Backlog |
+| 3 — UI/UX Design | `ui-ux-designer` | User Stories + design intent | HTML/CSS prototypes in `design/` |
+| 4 — Implementation | *(you write code)* | Design + User Stories | Source code |
+| 5 — Code Review | `senior-code-reviewer` | New/modified code | Review report + refactored code |
+| 6 — Security Audit | `security-engineer` | Reviewed code | Vulnerability report + patched code |
+| 7 — Performance | `performance-optimizer` | Patched code | Complexity table + optimized code |
+| 8 — Test Planning | `quality-assurance-engineer` | User Stories + code | Full test plan (6 types, 100% coverage) |
+| 9 — Documentation | `documentation-writer` | Finalized code | Inline comments + README sync |
+| 10 — Final Security Scan | `malicious-software-analysis` | Complete codebase | SAST report |
+| 11 — Deploy | *(you deploy)* | Production-ready code | Live application |
+
+---
+
+#### Phase 1: Product Definition
+
+**Agent:** `ai-dlc-sprint-product-owner`
+
+Describe your project idea in natural language. The agent runs a **mandatory 9-question Q&A** (3 questions per category, one category at a time) before generating the PRD.
+
+**Example prompt:**
+```
+I want to build a task management app that syncs across devices,
+supports team collaboration, and includes a time-tracking feature.
+I want to launch an MVP in 72 hours.
+```
+
+**What you receive:** A complete 12-section PRD saved as a `.md` file — including execution plan, tech stack choices, folder structure, and a Day-by-Day timeline.
+
+**Gate before Phase 2:** Confirm the PRD accurately reflects your priorities. Ask the agent to revise any section that doesn't match your intent.
+
+---
+
+#### Phase 2: Requirements & User Stories
+
+**Agent:** `tpm-product-manager`
+
+Share the PRD from Phase 1 and request structured User Stories.
+
+**Example prompt:**
+```
+Based on the PRD at /specs/project-prd.md, create formal User Stories
+for all P0 features with Given-When-Then acceptance criteria and story point estimates.
+```
+
+**What you receive:**
+- `/specs/PRD.md` — refined feature requirements document
+- `/specs/user-stories/*.md` — individual User Stories with priority, story points, acceptance criteria, and design references
+
+**Gate before Phase 3:** Every P0 User Story must have at least one clear, measurable Acceptance Criterion. Vague ACs will be flagged later by the QA Engineer.
+
+---
+
+#### Phase 3: UI/UX Design
+
+**Agent:** `ui-ux-designer`
+
+Request design prototypes for the features defined in the User Stories.
+
+**Example prompt:**
+```
+Based on the user stories in /specs/user-stories/, design:
+1. Main dashboard layout (task list + sidebar navigation)
+2. Task creation form (modal dialog)
+3. Team member invitation flow
+Save all interactive prototypes to the design/ folder.
+```
+
+**What you receive:** Interactive `.html` files in `design/` — openable directly in a browser with all component states (hover, focus, active, disabled, error) fully working.
+
+**Gate before Phase 4:** Open each prototype in a browser. Verify all required states are present, all flows are correct, and accessibility requirements are met (WCAG 2.1 AA).
+
+---
+
+#### Phase 4: Implementation
+
+**Who:** You (the developer)
+
+Write code based on the User Stories and design prototypes. Use the Folder Structure from the PRD as your project scaffold.
+
+**Checklist:**
+- [ ] Initialize the project using the folder structure from the PRD
+- [ ] Implement each User Story in priority order (P0 first)
+- [ ] For each feature, verify it meets the Acceptance Criteria before moving on
+
+---
+
+#### Phase 5: Code Review
+
+**Agent:** `senior-code-reviewer`
+
+This agent fires **automatically** after code is written/modified. To trigger explicitly:
+```
+Review all recently written code for SOLID violations,
+anti-patterns, DRY violations, and naming issues.
+```
+
+**What you receive:** A severity-ranked issue table (HIGH/MED/LOW) covering every modified file, plus refactored versions of problematic code.
+
+**Gate before Phase 6:** Resolve all HIGH and MED severity issues.
+
+---
+
+#### Phase 6: Security Audit
+
+**Agent:** `security-engineer`
+
+Fires **automatically** after code changes. To trigger explicitly:
+```
+Run a full security audit on the entire codebase using the current
+year's OWASP Top 10. Fetch live CVEs for all dependencies.
+```
+
+**What you receive:** Vulnerabilities mapped to OWASP categories and CVE IDs, with patched code for each finding and a complete dependency audit.
+
+**Gate before Phase 7:** Apply all HIGH severity security fixes before proceeding.
+
+---
+
+#### Phase 7: Performance Optimization
+
+**Agent:** `performance-optimizer`
+
+```
+Analyze time complexity for every function in the project and
+report all readability, maintainability, and debuggability issues.
+```
+
+**What you receive:** Complexity table for every function (current O() vs optimal O()), quality issues by file, and optimized rewrites for any algorithm that fails the threshold.
+
+**Gate before Phase 8:** Apply all optimizations and re-verify with the agent.
+
+---
+
+#### Phase 8: Test Planning
+
+**Agent:** `quality-assurance-engineer`
+
+```
+Based on the user stories in /specs/user-stories/ and the code in /src/,
+generate a complete test plan covering Unit, Integration, E2E, Security,
+Performance, and Accessibility tests. Ensure 100% scenario coverage for
+every test type.
+```
+
+**What you receive:**
+- Testability analysis (flags any vague ACs with rewrites)
+- Coverage matrix mapping every AC to all 6 test types
+- All test cases in Given-When-Then format
+- Test data requirements (fixtures, mocks, seed data)
+- 100% coverage checklist
+
+**Gate before Phase 9:** Implement all generated test cases. Run them. Fix any failures before proceeding.
+
+---
+
+#### Phase 9: Documentation
+
+**Agent:** `documentation-writer`
+
+Fires **automatically** after code is finalized. To trigger explicitly:
+```
+Add comprehensive inline comments to all source files and perform
+a full documentation sweep to sync all markdown docs with the
+current codebase.
+```
+
+**What you receive:** Every file header and function documented in English, all README and `docs/*.md` files verified and updated to match the actual code.
+
+**Gate before Phase 10:** Confirm the README includes correct and up-to-date deployment instructions.
+
+---
+
+#### Phase 10: Final Security Scan
+
+**Agent:** `malicious-software-analysis`
+
+```
+Perform a comprehensive malware and SAST scan on the entire repository
+before deployment. Fetch live threat intelligence, then check for
+backdoors, hardcoded credentials, supply chain attacks, and obfuscated code.
+```
+
+**What you receive:** An overall risk level (CRITICAL / HIGH / MEDIUM / LOW), all findings ranked by severity, and a prioritized remediation checklist.
+
+**Gate before Deploy:** Do not deploy until the report shows **LOW** or **CLEAR** overall risk.
+
+---
+
+#### Phase 11: Deploy
+
+All 10 phases complete means you have:
+- ✅ PRD and User Stories as living documentation
+- ✅ Interactive design prototypes in `design/`
+- ✅ Code passing SOLID, DRY, KISS review
+- ✅ All HIGH security vulnerabilities patched
+- ✅ No O(n²)+ algorithms remaining
+- ✅ Full test suite at 100% coverage (6 test types)
+- ✅ All code and docs fully documented
+- ✅ Final security scan: LOW or CLEAR
+
+**Your code is production-ready. Deploy with confidence.**
+
+---
+
+### SOP B: Existing Project Quality Upgrade
+
+Use this guide when you have an existing codebase and want to systematically improve code quality, security, test coverage, and documentation.
+
+#### Phase Overview
+
+| Step | Agent | What It Does |
+|------|-------|-------------|
+| 1 — Code Quality | `senior-code-reviewer` | Detect all architectural and code quality issues |
+| 2 — Security | `security-engineer` | Audit against current-year OWASP Top 10 + live CVEs |
+| 3 — Performance | `performance-optimizer` | Fix O(n²)+ algorithms and quality violations |
+| 4 — Test Coverage | `quality-assurance-engineer` | Generate missing tests for 100% coverage across 6 types |
+| 5 — Documentation | `documentation-writer` | Add inline comments + sync all markdown docs |
+| 6 — Final Scan | `malicious-software-analysis` | SAST scan before re-release |
+
+---
+
+#### Step 1: Code Quality Audit
+
+**Agent:** `senior-code-reviewer`
+
+```
+Review all source files in this project for SOLID violations,
+anti-patterns, DRY violations, naming issues, and excessive complexity.
+Report all findings with HIGH/MED/LOW severity and suggest fixes.
+```
+
+**What to expect:** A comprehensive issue table covering every file. Work through all HIGH and MED items before moving to Step 2.
+
+---
+
+#### Step 2: Security Hardening
+
+**Agent:** `security-engineer`
+
+```
+Perform a complete security audit of the entire codebase.
+Fetch the current year's OWASP Top 10 and live CVEs.
+Scan all source files and run dependency audits (npm audit / pip-audit / go list).
+Report all vulnerabilities with severity, CWE ID, and a code fix.
+```
+
+**What to expect:** All findings mapped to OWASP categories with patched code. Pay special attention to dependency vulnerabilities — these are the most common issue in existing projects.
+
+---
+
+#### Step 3: Performance Optimization
+
+**Agent:** `performance-optimizer`
+
+```
+Analyze time complexity for every function in the project.
+Identify and rewrite any O(n²) or worse algorithms.
+Flag all readability, maintainability, and debuggability issues.
+```
+
+**What to expect:** A complexity table for every function and optimized rewrites for anything that fails the complexity threshold (O(n²) flagged, O(2ⁿ) or worse rejected and rewritten).
+
+---
+
+#### Step 4: Test Coverage Completion
+
+**Agent:** `quality-assurance-engineer`
+
+This step is often the highest-impact improvement for existing projects.
+
+```
+Analyze the existing tests in /tests/ (or /test/, /__tests__/, /spec/) and
+the source code in /src/.
+Identify all gaps in coverage and generate missing test cases to achieve
+100% coverage across Unit, Integration, E2E, Security, Performance,
+and Accessibility test types.
+Flag any Acceptance Criteria that are untestable and suggest rewrites.
+```
+
+**What to expect:**
+- All untested code paths, edge cases, and error conditions identified
+- New test cases in Given-When-Then format for every gap
+- Updated coverage matrix showing before/after
+- 100% coverage checklist
+
+**Common gaps found in existing projects:**
+- Error/exception paths not tested
+- Boundary values (null, empty string, max length) missing
+- No security tests (injection attacks, auth bypass)
+- No accessibility checks (keyboard nav, ARIA)
+- Performance baselines never defined
+
+---
+
+#### Step 5: Documentation Completeness
+
+**Agent:** `documentation-writer`
+
+```
+Perform a full documentation sweep:
+1. Add inline comments to all undocumented files and functions
+2. Cross-reference every README, docs/*.md, and .github/*.md
+   with the current codebase
+3. Update any outdated API examples, function signatures, or CLI flags
+4. Add documentation for any new public APIs that have no docs
+```
+
+**What to expect:** Every file header and function documented, all markdown files verified and updated to match the actual current code. Deprecated APIs marked as `[DEPRECATED — removed in <version>]`.
+
+---
+
+#### Step 6: Final Malware Scan
+
+**Agent:** `malicious-software-analysis`
+
+```
+Perform a comprehensive SAST scan on the entire repository.
+Fetch live threat intelligence (OWASP, MITRE ATT&CK, CVE, ThreatFox IOC).
+Check for backdoors, hardcoded credentials, supply chain attacks,
+obfuscated code, and reverse shell patterns.
+```
+
+**Gate: Do not re-release or deploy until the scan shows LOW or CLEAR overall risk.**
+
+---
+
+#### Completion Checklist
+
+After all 6 steps:
+- [ ] All HIGH and MED code review issues resolved
+- [ ] All HIGH security vulnerabilities patched, dependencies audited
+- [ ] All O(n²)+ algorithms rewritten
+- [ ] Test suite at 100% coverage for all 6 test types
+- [ ] All files and functions documented in English
+- [ ] All markdown docs synced with current codebase
+- [ ] Final security scan: LOW or CLEAR
+
+---
+
 ## Where Do `tools` Parameter Names Come From?
 
 The `tools` field in each agent's frontmatter restricts which built-in tools the sub-agent may call. Each CLI platform defines its own tool vocabulary.
@@ -842,7 +1278,7 @@ The tool names come from Gemini CLI's core built-in tool set as defined in the o
 
 ## The Multi-Agent Pipeline
 
-> **The single unifying sentence:** By placing these eight agent markdown files in your AI CLI's agent directory, the orchestrator gains two complete pipelines — the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) shapes the idea into a spec and prototype; the **Development Quality Pipeline** (Senior Code Reviewer → Security Engineer → Performance Optimizer → Documentation Writer → Malicious Software Analyst) then takes that implementation through automated review, security hardening, optimization, documentation, and threat scanning — eight sub-agents forming one seamless workflow from product idea to production-ready code.
+> **The single unifying sentence:** By placing these nine agent markdown files in your AI CLI's agent directory, the orchestrator gains two complete pipelines — the **Product & Design Pipeline** (Sprint Product Owner → TPM Product Manager → UI/UX Designer) shapes the idea into a spec and prototype; the **Development Quality Pipeline** (Senior Code Reviewer → Security Engineer → Performance Optimizer → Quality Assurance Engineer → Documentation Writer → Malicious Software Analyst) then takes that implementation through automated review, security hardening, optimization, QA test planning, documentation, and threat scanning — nine sub-agents forming one seamless workflow from product idea to production-ready code.
 
 ```
 User describes a project idea
@@ -881,6 +1317,12 @@ User describes a project idea
 ┌─────────────────────────────┐
 │   Performance Optimizer      │  Time complexity O() · readability
 │   tools: Read Write          │  Maintainability · debuggability
+└────────────┬────────────────┘
+             │
+             ▼
+┌─────────────────────────────┐
+│  Quality Assurance Engineer  │  Unit/Integration/E2E/Security/Perf/A11y
+│  tools: Read Write Glob Grep │  100% coverage · Given-When-Then · test plan
 └────────────┬────────────────┘
              │
              ▼
